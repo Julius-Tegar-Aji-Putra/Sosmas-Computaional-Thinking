@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MISI LOGIKA — Petualangan Problem Solver!</title>
+  <!-- Google Fonts: Fredoka & Nunito Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-shell">
+
+    <!-- PAGE 01: START SCREEN -->
+    <section id="start-screen" class="screen-view active">
+      <div class="card start-card">
+        
+        <!-- Top Tags -->
+        <div class="tag-row">
+          <span class="stamp-tag tag-yellow">3 Misi</span>
+          <span class="stamp-tag tag-blue">±30 Menit</span>
+          <span class="stamp-tag tag-orange">1 Tantangan</span>
+        </div>
+
+        <!-- Title Header -->
+        <div class="hero-header">
+          <div class="badge-title">MISI LOGIKA</div>
+          <p class="hero-subtitle">Petualangan kecil untuk menjadi Problem Solver!</p>
+        </div>
+
+        <!-- Robot Mascot Logi -->
+        <div class="mascot-wrapper">
+          <div class="speech-bubble">
+            “Halo! Aku <strong>Logi</strong> 🤖<br>
+            Bantu aku menyelesaikan 3 misi logika ya!”
+          </div>
+          <div class="logi-avatar">
+            <svg class="logi-svg" viewBox="0 0 160 160" width="140" height="140">
+              <!-- Antenna -->
+              <line x1="80" y1="35" x2="80" y2="15" stroke="#202124" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="80" cy="12" r="7" fill="#FFC83D" stroke="#202124" stroke-width="3"/>
+              
+              <!-- Robot Ears -->
+              <rect x="22" y="55" width="12" height="24" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+              <rect x="126" y="55" width="12" height="24" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+
+              <!-- Robot Head -->
+              <rect x="32" y="32" width="96" height="70" rx="8" fill="#FFF9EA" stroke="#202124" stroke-width="4"/>
+              
+              <!-- Screen Face -->
+              <rect x="42" y="44" width="76" height="46" rx="6" fill="#202124"/>
+              <!-- Eyes -->
+              <circle cx="62" cy="64" r="8" fill="#FFC83D"/>
+              <circle cx="98" cy="64" r="8" fill="#FFC83D"/>
+              <circle cx="64" cy="62" r="3" fill="#FFF9EA"/>
+              <circle cx="100" cy="62" r="3" fill="#FFF9EA"/>
+              <!-- Happy Mouth -->
+              <path d="M 70 76 Q 80 84 90 76" stroke="#4FAE68" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+              <!-- Robot Body -->
+              <rect x="44" y="106" width="72" height="46" rx="6" fill="#3A7BD5" stroke="#202124" stroke-width="4"/>
+              <!-- Chest Meter Buttons -->
+              <circle cx="64" cy="124" r="6" fill="#F15A4A" stroke="#202124" stroke-width="2"/>
+              <circle cx="80" cy="124" r="6" fill="#FFC83D" stroke="#202124" stroke-width="2"/>
+              <circle cx="96" cy="124" r="6" fill="#4FAE68" stroke="#202124" stroke-width="2"/>
+              <!-- Arms -->
+              <path d="M 44 115 Q 24 125 28 140" stroke="#202124" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M 116 115 Q 136 125 132 140" stroke="#202124" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- CTA Start Button -->
+        <button id="btn-start" class="btn btn-yellow btn-hero">
+          MULAI MISI →
+        </button>
+
+      </div>
+    </section>
+
+    <!-- PAGE 02: MISSION SCREEN -->
+    <section id="mission-screen" class="screen-view hidden">
+      
+      <!-- Top Persistent Bar -->
+      <header class="mission-header">
+        <div class="brand-mini">MISI LOGIKA</div>
+        <div class="progress-tracker">
+          <div class="progress-step active" id="prog-1">01 Pola</div>
+          <div class="progress-line"></div>
+          <div class="progress-step" id="prog-2">02 Robot</div>
+          <div class="progress-line"></div>
+          <div class="progress-step" id="prog-3">03 Bug</div>
+        </div>
+        <div class="score-badge">⭐ SKOR: <span id="score-val">0</span></div>
+      </header>
+
+      <main class="mission-content">
+
+        <!-- ================= MISSION 01: DETEKTIF POLA ================= -->
+        <div id="mission-1" class="mission-pane active">
+          
+          <div class="mission-banner">
+            <span class="stamp-tag tag-yellow">MISI 01</span>
+            <h2>DETEKTIF POLA</h2>
+            <p class="mission-intro">“Logi menemukan kode rahasia. Bantu temukan bentuk atau simbol berikutnya!”</p>
+          </div>
+
+          <div class="card puzzle-card">
+            <div class="puzzle-header">
+              <span class="soal-badge">Soal <span id="m1-q-num">1</span> dari 3</span>
+              <span class="misi-hint" id="m1-hint">Temukan pola berulang!</span>
+            </div>
+
+            <!-- Pattern Display -->
+            <div class="pattern-sequence-container">
+              <div id="pattern-items" class="pattern-items">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Options Row -->
+            <div class="options-label">Pilih jawabanmu:</div>
+            <div id="m1-options" class="options-grid">
+              <!-- Injected via JS -->
+            </div>
+
+            <!-- Feedback Modal/Box -->
+            <div id="m1-feedback" class="feedback-box hidden">
+              <div id="m1-fb-icon" class="fb-icon">✓</div>
+              <div class="fb-text">
+                <h4 id="m1-fb-title">BENAR!</h4>
+                <p id="m1-fb-desc">Kamu berhasil menemukan polanya.</p>
+              </div>
+              <button id="m1-btn-next" class="btn btn-yellow">LANJUT →</button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ================= MISSION 02: JADI PROGRAMMER ================= -->
+        <div id="mission-2" class="mission-pane hidden">
+          
+          <div class="mission-banner">
+            <span class="stamp-tag tag-blue">MISI 02</span>
+            <h2>JADI PROGRAMMER!</h2>
+            <p class="mission-intro">“Logi hanya bisa mengikuti perintahmu. Susun urutan langkah untuk mengantar Logi ke Bintang ⭐!”</p>
+          </div>
+
+          <div class="programmer-layout">
+
+            <!-- Grid Area -->
+            <div class="card grid-card">
+              <div class="board-header">
+                <span>PAPAN JALAN LOGI (4x4)</span>
+                <span class="target-info">Tujuan: ⭐</span>
+              </div>
+
+              <div id="robot-grid" class="robot-grid">
+                <!-- 16 Cells (0,0 to 3,3) generated by JS -->
+              </div>
+            </div>
+
+            <!-- Controls Area -->
+            <div class="card controls-card">
+              <h3>PANEL PERINTAH</h3>
+              <p class="small-note">Klik tombol panah untuk menambah langkah:</p>
+
+              <!-- Direction Buttons -->
+              <div class="dpad-grid">
+                <div></div>
+                <button class="btn btn-cmd btn-blue" data-dir="UP">⬆️ ATAS</button>
+                <div></div>
+                <button class="btn btn-cmd btn-blue" data-dir="LEFT">⬅️ KIRI</button>
+                <button class="btn btn-cmd btn-blue" data-dir="DOWN">⬇️ BAWAH</button>
+                <button class="btn btn-cmd btn-blue" data-dir="RIGHT">➡️ KANAN</button>
+              </div>
+
+              <!-- Sequence Queue -->
+              <div class="sequence-box">
+                <div class="seq-header">
+                  <span>LANGKAHMU (<span id="cmd-count">0</span>/8):</span>
+                  <button id="btn-pop-cmd" class="btn-text">⌫ Hapus Satu</button>
+                </div>
+                <div id="cmd-queue" class="cmd-queue">
+                  <span class="placeholder-text">Belum ada perintah...</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="action-row">
+                <button id="btn-run-robot" class="btn btn-yellow btn-large">🚀 JALANKAN!</button>
+                <button id="btn-reset-robot" class="btn btn-red">🔄 RESET</button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- M2 Feedback Box -->
+          <div id="m2-feedback" class="feedback-box hidden">
+            <div id="m2-fb-icon" class="fb-icon">🎉</div>
+            <div class="fb-text">
+              <h4 id="m2-fb-title">MISSION COMPLETE!</h4>
+              <p id="m2-fb-desc">Logi berhasil sampai ke Bintang!</p>
+              <div class="concept-callout">
+                <strong>💡 Konsep Informatika:</strong><br>
+                Urutan langkah yang kamu buat tadi disebut <strong>ALGORITMA</strong>!
+              </div>
+            </div>
+            <button id="m2-btn-next" class="btn btn-yellow">LANJUT MISI 3 →</button>
+          </div>
+
+        </div>
+
+        <!-- ================= MISSION 03: TANGKAP BUG! ================= -->
+        <div id="mission-3" class="mission-pane hidden">
+          
+          <div class="mission-banner">
+            <span class="stamp-tag tag-orange">MISI 03</span>
+            <h2>TANGKAP BUG!</h2>
+            <p class="mission-intro">“Logi sedang membuat Roti Selai 🥪, tetapi urutan instruksinya berantakan!”</p>
+          </div>
+
+          <!-- Phase 1: Identify Bug -->
+          <div id="m3-phase-1" class="card puzzle-card">
+            <div class="puzzle-header">
+              <span class="soal-badge">Tahap 1: Temukan Bug</span>
+            </div>
+            <p class="instruction-text">Klik <strong>langkah mana yang salah / tidak logis</strong> di bawah ini:</p>
+
+            <div id="m3-scrambled-list" class="scrambled-list">
+              <!-- Injected by JS -->
+            </div>
+
+            <div id="m3-p1-feedback" class="feedback-box hidden">
+              <div class="fb-icon">🐛</div>
+              <div class="fb-text">
+                <h4>BUG FOUND!</h4>
+                <p>Benar! Kita tidak bisa makan roti sebelum menyiapkannya!</p>
+              </div>
+              <button id="btn-goto-p2" class="btn btn-yellow">PERBAIKI URUTAN →</button>
+            </div>
+          </div>
+
+          <!-- Phase 2: Fix Reorder -->
+          <div id="m3-phase-2" class="card puzzle-card hidden">
+            <div class="puzzle-header">
+              <span class="soal-badge">Tahap 2: Susun Urutan yang Benar</span>
+            </div>
+            <p class="instruction-text">Gunakan panah ⬆️ ⬇️ untuk mengurutkan langkah dari awal sampai akhir:</p>
+
+            <div id="m3-reorder-list" class="reorder-list">
+              <!-- Injected by JS -->
+            </div>
+
+            <button id="btn-check-debug" class="btn btn-green btn-large margin-top-md">
+              ✓ CEK PERBAIKAN
+            </button>
+
+            <div id="m3-p2-feedback" class="feedback-box hidden">
+              <div class="fb-icon">🎉</div>
+              <div class="fb-text">
+                <h4>LUAR BIASA!</h4>
+                <p>Urutan langkah roti selai sudah sempurna!</p>
+                <div class="concept-callout">
+                  <strong>💡 Konsep Informatika:</strong><br>
+                  Proses menemukan dan memperbaiki kesalahan disebut <strong>DEBUGGING</strong>!
+                </div>
+              </div>
+              <button id="btn-show-result" class="btn btn-yellow">LIHAT HASIL AKHIR 🏆</button>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+
+    </section>
+
+    <!-- PAGE 03: RESULT SCREEN -->
+    <section id="result-screen" class="screen-view hidden">
+      <div class="card result-card">
+        
+        <div class="result-header">
+          <span class="stamp-tag tag-green">SELESAI!</span>
+          <h1>MISSION COMPLETE!</h1>
+        </div>
+
+        <div class="badge-display">
+          <div class="badge-icon">🤖 ⭐</div>
+          <h2 class="badge-title-text">LITTLE PROBLEM SOLVER</h2>
+          <div class="star-rating">⭐⭐⭐⭐⭐</div>
+        </div>
+
+        <div class="score-summary-box">
+          <span class="score-label">TOTAL SKOR KAMU:</span>
+          <span class="score-big"><span id="final-score-val">100</span> / 100</span>
+        </div>
+
+        <div class="checklist-box">
+          <h3>KAMU SUDAH BELAJAR:</h3>
+          <ul class="achievement-checklist">
+            <li><span class="check-mark">✓</span> <strong>Menemukan Pola</strong> (Pattern Recognition)</li>
+            <li><span class="check-mark">✓</span> <strong>Menyusun Langkah Logis</strong> (Algorithmic Thinking)</li>
+            <li><span class="check-mark">✓</span> <strong>Menemukan & Memperbaiki Bug</strong> (Debugging)</li>
+          </ul>
+        </div>
+
+        <div class="reflection-box">
+          <p class="quote">“Problem solver sejati tidak takut mencoba lagi ketika belum tepat!”</p>
+          <div class="reflect-prompt">
+            <strong>💬 Diskusi Bersama:</strong><br>
+            “Siapa yang tadi sempat salah di Misi 2 atau 3? Apa yang kita lakukan saat salah?”<br>
+            <em>(Jawab: Coba lagi & perbaiki urutannya!)</em>
+          </div>
+        </div>
+
+        <button id="btn-restart" class="btn btn-yellow btn-hero">
+          🔄 MAIN LAGI
+        </button>
+
+      </div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
