@@ -5,6 +5,24 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   
+
+  // ==========================================
+  // 0. CUSTOM TOAST NOTIFICATION (replaces alert)
+  // ==========================================
+  const toastContainer = document.getElementById('toast-container');
+
+  function showToast(message, type = 'wrong') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add('toast-hide');
+      toast.addEventListener('animationend', () => toast.remove());
+    }, 3200);
+  }
+
   // ==========================================
   // 1. STATE & SCENE MANAGEMENT
   // ==========================================
@@ -69,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.currentTarget.classList.add('selected-correct');
         logicFeedback.classList.remove('hidden');
       } else {
-        alert('Coba pikirkan lagi: Kalau hujan deras di luar, kacamata hitam atau es krim tidak bisa melindungimu dari basah kuyup!');
+        showToast('Coba pikirkan lagi: Kalau hujan deras di luar, kacamata hitam atau es krim tidak bisa melindungimu dari basah kuyup!');
       }
     });
   });
@@ -159,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (p === 'moon') {
         patternFb.classList.remove('hidden');
       } else {
-        alert('Coba lihat lagi polanya: ⭐ 🌙 ⭐ 🌙 ⭐ ... Setelah bintang, bentuk apa yang muncul?');
+        showToast('Coba lihat lagi polanya: ⭐ 🌙 ⭐ 🌙 ⭐ ... Setelah bintang, bentuk apa yang muncul?');
       }
     });
   });
@@ -254,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isCorrect) {
       algoFb.classList.remove('hidden');
     } else {
-      alert('Urutan langkah membuat susu belum pas! Pikirkan: Ambil gelas dulu ➔ Masukkan susu ➔ Tuang air ➔ Aduk!');
+      showToast('Urutan langkah membuat susu belum pas! Pikirkan: Ambil gelas dulu ➔ Masukkan susu ➔ Tuang air ➔ Aduk!');
     }
   });
 
@@ -270,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isBug) {
         debugFb.classList.remove('hidden');
       } else {
-        alert('Bukan langkah ini! Cari langkah mana yang mustahil dilakukan di awal.');
+        showToast('Bukan langkah ini! Cari langkah mana yang mustahil dilakukan di awal.');
       }
     });
   });
