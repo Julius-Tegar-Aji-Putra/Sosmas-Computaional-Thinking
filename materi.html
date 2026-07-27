@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MISI LOGIKA — Kenalan dengan Cara Berpikir Informatika</title>
+  <!-- Google Fonts: Fredoka & Nunito Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="materi-style.css">
+</head>
+<body>
+
+  <div class="app-shell">
+
+    <!-- PERSISTENT TOP HEADER -->
+    <header class="materi-header">
+      <div class="brand-mini">MISI LOGIKA — BUKU MATERI</div>
+      <div class="progress-bar-container">
+        <div id="materi-progress" class="progress-bar-fill" style="width: 25%;"></div>
+      </div>
+      <div class="step-indicator"><span id="current-scene-num">01</span> / 04</div>
+    </header>
+
+    <!-- SCENE 01: HELLO, PROBLEM SOLVER! -->
+    <section id="scene-1" class="materi-scene active">
+      <div class="card hero-card">
+        
+        <div class="tag-row">
+          <span class="stamp-tag tag-yellow">Buku Materi</span>
+          <span class="stamp-tag tag-blue">±10–15 Menit</span>
+          <span class="stamp-tag tag-orange">SD Kelas 4–6</span>
+        </div>
+
+        <div class="hero-header">
+          <div class="badge-title">HALO, PROBLEM SOLVER!</div>
+          <p class="hero-subtitle">Pernah bingung saat menghadapi sebuah masalah?</p>
+        </div>
+
+        <div class="mascot-wrapper">
+          <div class="speech-bubble">
+            “Halo! Aku <strong>Logi</strong> 🤖<br>
+            Setiap hari kita memecahkan banyak masalah, mulai dari memilih barang ke sekolah sampai mencari jalan tercepat. Komputer juga butuh cara berpikir yang teratur!”
+          </div>
+          <div class="logi-avatar">
+            <svg class="logi-svg" viewBox="0 0 160 160" width="130" height="130">
+              <line x1="80" y1="35" x2="80" y2="15" stroke="#202124" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="80" cy="12" r="7" fill="#FFC83D" stroke="#202124" stroke-width="3"/>
+              <rect x="22" y="55" width="12" height="24" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+              <rect x="126" y="55" width="12" height="24" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+              <rect x="32" y="32" width="96" height="70" rx="8" fill="#FFF9EA" stroke="#202124" stroke-width="4"/>
+              <rect x="42" y="44" width="76" height="46" rx="6" fill="#202124"/>
+              <circle cx="62" cy="64" r="8" fill="#FFC83D"/>
+              <circle cx="98" cy="64" r="8" fill="#FFC83D"/>
+              <circle cx="64" cy="62" r="3" fill="#FFF9EA"/>
+              <circle cx="100" cy="62" r="3" fill="#FFF9EA"/>
+              <path d="M 70 76 Q 80 84 90 76" stroke="#4FAE68" stroke-width="4" stroke-linecap="round" fill="none"/>
+              <rect x="44" y="106" width="72" height="46" rx="6" fill="#3A7BD5" stroke="#202124" stroke-width="4"/>
+              <circle cx="64" cy="124" r="6" fill="#F15A4A" stroke="#202124" stroke-width="2"/>
+              <circle cx="80" cy="124" r="6" fill="#FFC83D" stroke="#202124" stroke-width="2"/>
+              <circle cx="96" cy="124" r="6" fill="#4FAE68" stroke="#202124" stroke-width="2"/>
+              <path d="M 44 115 Q 24 125 28 140" stroke="#202124" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M 116 115 Q 136 125 132 140" stroke="#202124" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <button id="btn-goto-s2" class="btn btn-yellow btn-hero">
+          MULAI BELAJAR →
+        </button>
+
+      </div>
+    </section>
+
+    <!-- SCENE 02: APA ITU BERPIKIR LOGIS? -->
+    <section id="scene-2" class="materi-scene hidden">
+      <div class="card concept-card blue-accent">
+        
+        <div class="scene-label"><span class="stamp-tag tag-blue">01. LOGIKA</span></div>
+        <h2 class="scene-title">APA ITU BERPIKIR LOGIS?</h2>
+
+        <div class="scenario-box">
+          <p class="scenario-text">
+            “Bayangkan kamu ingin pergi ke sekolah. Tiba-tiba di luar <strong class="text-blue">HUJAN DERAS 🌧️</strong>! Apa yang kamu pilih?”
+          </p>
+
+          <div id="logic-options" class="choice-grid">
+            <button class="choice-btn" data-choice="umbrella">☂️ PAYUNG</button>
+            <button class="choice-btn" data-choice="sunglasses">🕶️ KACAMATA HITAM</button>
+            <button class="choice-btn" data-choice="icecream">🍦 ES KRIM</button>
+          </div>
+
+          <div id="logic-feedback" class="feedback-box hidden">
+            <div class="fb-icon">✓</div>
+            <div class="fb-text">
+              <h4>BENAR BANGET!</h4>
+              <p>Kamu menggunakan informasi hujan untuk memilih benda yang paling masuk akal!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="explanation-callout">
+          <h3>💡 Itulah Salah Satu Contoh Berpikir Logis!</h3>
+          <p>
+            <strong>Berpikir logis</strong> artinya menggunakan <span class="highlight">informasi dan alasan</span> untuk menentukan tindakan yang paling masuk akal.
+          </p>
+
+          <div class="logic-path-diagram">
+            <div class="path-step"><span>👁️</span> Mengamati</div>
+            <div class="path-arrow">➔</div>
+            <div class="path-step"><span>🧠</span> Memikirkan</div>
+            <div class="path-arrow">➔</div>
+            <div class="path-step"><span>🎯</span> Memilih</div>
+            <div class="path-arrow">➔</div>
+            <div class="path-step"><span>🚀</span> Mencoba</div>
+          </div>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-secondary btn-prev">← KEMBALI</button>
+          <button id="btn-goto-s3" class="btn btn-yellow">CARA MEMECAHKAN MASALAH →</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SCENE 03: CARA MEMECAHKAN MASALAH (COMPUTATIONAL THINKING) -->
+    <section id="scene-3" class="materi-scene hidden">
+      
+      <!-- Sub-Tabs Bar for 5 Concepts -->
+      <div class="subtabs-bar">
+        <button class="tab-btn active" data-sub="3a">1. Pecah</button>
+        <button class="tab-btn" data-sub="3b">2. Pola</button>
+        <button class="tab-btn" data-sub="3c">3. Pilih</button>
+        <button class="tab-btn" data-sub="3d">4. Langkah</button>
+        <button class="tab-btn" data-sub="3e">5. Debug</button>
+      </div>
+
+      <!-- 3A. DECOMPOSITION -->
+      <div id="sub-3a" class="card concept-card blue-accent subpane active">
+        <div class="scene-label"><span class="stamp-tag tag-blue">BAGIAN A — DECOMPOSITION</span></div>
+        <h2>1. PECAH JADI BAGIAN KECIL</h2>
+        <p class="concept-intro">“Kalau masalahnya besar, jangan pusing! Pecah menjadi bagian-bagian kecil agar lebih mudah.”</p>
+
+        <div class="interactive-tree-area">
+          <p class="instruction-note">Klik kotak di bawah untuk memecah tugas sekolah:</p>
+          <button id="btn-reveal-tree" class="tree-root-btn">
+            🎒 PERSIAPAN SEKOLAH (Klik me!)
+          </button>
+
+          <div id="tree-branches" class="tree-branches hidden">
+            <div class="branch-card">👔 Seragam Sekolah</div>
+            <div class="branch-card">📚 Buku & Alat Tulis</div>
+            <div class="branch-card">🥪 Bekal Makanan</div>
+          </div>
+        </div>
+
+        <div class="concept-takeaway">
+          <strong>💡 Decomposition:</strong> Memecah masalah besar menjadi bagian-bagian kecil agar mudah diselesaikan satu per satu.
+        </div>
+      </div>
+
+      <!-- 3B. PATTERN RECOGNITION -->
+      <div id="sub-3b" class="card concept-card yellow-accent subpane hidden">
+        <div class="scene-label"><span class="stamp-tag tag-yellow">BAGIAN B — PATTERN RECOGNITION</span></div>
+        <h2>2. CARI POLA</h2>
+        <p class="concept-intro">“Banyak hal di sekitar kita yang memiliki pola atau pengulangan.”</p>
+
+        <div class="pattern-interactive-box">
+          <div class="pattern-line">
+            <span>⭐</span> <span>🌙</span> <span>⭐</span> <span>🌙</span> <span>⭐</span> <span class="target-q">?</span>
+          </div>
+
+          <div id="pattern-choices" class="choice-grid">
+            <button class="choice-btn" data-pattern="star">⭐</button>
+            <button class="choice-btn" data-pattern="moon">🌙</button>
+            <button class="choice-btn" data-pattern="sun">☀️</button>
+          </div>
+
+          <div id="pattern-fb" class="feedback-box hidden">
+            <div class="fb-icon">✓</div>
+            <div class="fb-text">
+              <h4>TEPAT BANGET!</h4>
+              <p>Kamu menemukan pola selang-seling Bintang dan Bulan!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-takeaway">
+          <strong>💡 Pattern Recognition:</strong> Kemampuan menemukan sesuatu yang berulang atau memiliki kesamaan.
+        </div>
+      </div>
+
+      <!-- 3C. ABSTRACTION -->
+      <div id="sub-3c" class="card concept-card orange-accent subpane hidden">
+        <div class="scene-label"><span class="stamp-tag tag-orange">BAGIAN C — ABSTRACTION</span></div>
+        <h2>3. PILIH YANG PENTING</h2>
+        <p class="concept-intro">“Saat mencari jalan dari Rumah 🏠 ke Sekolah 🏫, tidak semua hal perlu kamu perhatikan.”</p>
+
+        <div class="abstraction-interactive-box">
+          <p class="instruction-note">Pilih <strong>2 hal yang PALING PENTING</strong> untuk mencari jalan ke sekolah:</p>
+          <div id="abs-grid" class="abs-items-grid">
+            <button class="abs-btn" data-id="home">🏠 Rumah</button>
+            <button class="abs-btn" data-id="cat">🐱 Kucing Tidur</button>
+            <button class="abs-btn" data-id="school">🏫 Sekolah</button>
+            <button class="abs-btn" data-id="cloud">☁️ Awan</button>
+            <button class="abs-btn" data-id="road">🛣️ Jalan Utama</button>
+          </div>
+
+          <div id="abs-fb" class="feedback-box hidden">
+            <div class="fb-icon">🎯</div>
+            <div class="fb-text">
+              <h4>HEBAT!</h4>
+              <p>Kamu memilih informasi yang paling penting. Kucing & Awan bisa diabaikan!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-takeaway">
+          <strong>💡 Abstraction:</strong> Memilih dan fokus hanya pada informasi yang penting untuk menyelesaikan masalah.
+        </div>
+      </div>
+
+      <!-- 3D. ALGORITHM -->
+      <div id="sub-3d" class="card concept-card orange-accent subpane hidden">
+        <div class="scene-label"><span class="stamp-tag tag-orange">BAGIAN D — ALGORITHM</span></div>
+        <h2>4. SUSUN LANGKAH</h2>
+        <p class="concept-intro">“Bagaimana cara membuat Susu Cokelat 🥛 yang lezat?”</p>
+
+        <div class="algorithm-interactive-box">
+          <p class="instruction-note">Urutkan langkah di bawah dari 1 sampai 4 menggunakan panah ⬆️ ⬇️:</p>
+          
+          <div id="algo-reorder-list" class="reorder-list">
+            <!-- Injected via JS -->
+          </div>
+
+          <button id="btn-check-algo" class="btn btn-green margin-top-md">✓ CEK URUTAN</button>
+
+          <div id="algo-fb" class="feedback-box hidden">
+            <div class="fb-icon">🎉</div>
+            <div class="fb-text">
+              <h4>SEMPURNA!</h4>
+              <p>Urutan langkah yang kamu buat ini disebut ALGORITMA!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-takeaway">
+          <strong>💡 Algorithm:</strong> Urutan langkah logis yang disusun untuk menyelesaikan masalah.
+        </div>
+      </div>
+
+      <!-- 3E. DEBUGGING -->
+      <div id="sub-3e" class="card concept-card red-accent subpane hidden">
+        <div class="scene-label"><span class="stamp-tag tag-orange">BAGIAN E — DEBUGGING</span></div>
+        <h2>5. CARI & PERBAIKI KESALAHAN</h2>
+        <p class="concept-intro">“Bagaimana kalau urutan langkah kita ada yang aneh?”</p>
+
+        <div class="debug-interactive-box">
+          <p class="instruction-note">Klik <strong>langkah mana yang aneh/salah</strong> di bawah:</p>
+          
+          <div id="debug-scrambled" class="scrambled-list">
+            <div class="step-card debug-opt" data-bug="true"><span class="step-num">01</span> <span>Minum susu</span></div>
+            <div class="step-card debug-opt" data-bug="false"><span class="step-num">02</span> <span>Tuang susu ke gelas</span></div>
+            <div class="step-card debug-opt" data-bug="false"><span class="step-num">03</span> <span>Ambil gelas</span></div>
+          </div>
+
+          <div id="debug-fb" class="feedback-box hidden">
+            <div class="fb-icon">🐛</div>
+            <div class="fb-text">
+              <h4>BUG FOUND!</h4>
+              <p>Benar! Kita tidak bisa minum susu sebelum menyiapkan gelas dan menuangkannya!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-takeaway">
+          <strong>💡 Debugging:</strong> Menemukan kesalahan (bug) dan memperbaikinya agar berhasil.
+        </div>
+      </div>
+
+      <!-- Scene 3 Bottom Controls -->
+      <div class="nav-row margin-top-lg">
+        <button id="btn-prev-sub" class="btn btn-secondary">← PREV</button>
+        <button id="btn-next-sub" class="btn btn-yellow">SELANJUTNYA →</button>
+      </div>
+
+    </section>
+
+    <!-- SCENE 04: READY FOR THE MISSION! -->
+    <section id="scene-4" class="materi-scene hidden">
+      <div class="card result-card">
+        
+        <div class="result-header">
+          <span class="stamp-tag tag-green">SELESAI BELAJAR!</span>
+          <h1>SEKARANG KAMU SUDAH TAHU!</h1>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-tile">
+            <span class="tile-icon">🧩</span>
+            <h4>Pecah Masalah</h4>
+            <p>Decomposition</p>
+          </div>
+          <div class="summary-tile">
+            <span class="tile-icon">🔍</span>
+            <h4>Cari Pola</h4>
+            <p>Pattern Recognition</p>
+          </div>
+          <div class="summary-tile">
+            <span class="tile-icon">🎯</span>
+            <h4>Pilih yang Penting</h4>
+            <p>Abstraction</p>
+          </div>
+          <div class="summary-tile">
+            <span class="tile-icon">🪜</span>
+            <h4>Susun Langkah</h4>
+            <p>Algorithm</p>
+          </div>
+          <div class="summary-tile">
+            <span class="tile-icon">🐛</span>
+            <h4>Perbaiki Bug</h4>
+            <p>Debugging</p>
+          </div>
+        </div>
+
+        <div class="ready-callout">
+          <div class="mascot-avatar-sm">🤖</div>
+          <p>
+            “Logi sudah menunggu di Kota Logika! Apakah kamu siap menguji kemampuan berpikirmu dalam permainan?”
+          </p>
+        </div>
+
+        <a href="index.html" class="btn btn-yellow btn-hero link-game">
+          🎮 MULAI MISI LOGIKA (GAME) →
+        </a>
+
+      </div>
+    </section>
+
+  </div>
+
+  <script src="materi-script.js"></script>
+</body>
+</html>
