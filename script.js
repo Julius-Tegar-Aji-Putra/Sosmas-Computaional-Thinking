@@ -6,6 +6,23 @@
 document.addEventListener('DOMContentLoaded', () => {
   
   // ==========================================
+  // 0. CUSTOM TOAST NOTIFICATION (replaces alert)
+  // ==========================================
+  const toastContainer = document.getElementById('toast-container');
+
+  function showToast(message, type = 'wrong') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add('toast-hide');
+      toast.addEventListener('animationend', () => toast.remove());
+    }, 3200);
+  }
+
+  // ==========================================
   // 1. STATE MANAGEMENT
   // ==========================================
   const state = {
@@ -441,7 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (step.isBug) {
       m3P1Feedback.classList.remove('hidden');
     } else {
-      alert('Bukan langkah itu! Cari langkah mana yang paling tidak masuk akal dilakukan di awal.');
+      showToast('Bukan langkah itu! Cari langkah mana yang paling tidak masuk akal dilakukan di awal.');
     }
   }
 
@@ -504,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       m3P2Feedback.classList.remove('hidden');
     } else {
-      alert('Urutan langkah masih belum tepat! Pikirkan: Piring dulu, lalu Roti, Oles Selai, baru Dimakan!');
+      showToast('Urutan langkah masih belum tepat! Pikirkan: Piring dulu, lalu Roti, Oles Selai, baru Dimakan!');
     }
   });
 
