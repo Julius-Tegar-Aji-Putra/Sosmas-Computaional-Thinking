@@ -11,13 +11,11 @@
 const state = {
   currentScreen: 'welcome',   // welcome | materi | missions | finale
   currentScene:  1,           // 1–4 (materi scenes)
-  currentSub:    '3a',        // 3a–3e (scene 3 sub-tabs)
+  currentSub:    '3a',        // 3a–3d (scene 3 sub-tabs)
   currentMission: 1,          // 1–3
 
   // Interaction unlock flags
   logicAnswered:   false,
-  debugP1Done:     false,
-  debugP2Done:     false,
 
   // Pattern quiz (scene 3b)
   patternQ1Done: false,
@@ -28,10 +26,6 @@ const state = {
 
   // Abstraction
   absSelected: [],
-
-  // Debug (scene 3e)
-  debugItems: [],
-  bugFound:   false,
 
   // Mission 1 — Detektif Pola
   m1Level:     1,
@@ -83,11 +77,6 @@ function gotoScene(n) {
     showToast('Pilih jawaban dulu ya! 🧠', 'wrong');
     return;
   }
-  // Guard: scene 4 requires debug phase 2 done
-  if (n === 4 && !state.debugP2Done) {
-    showToast('Selesaikan dulu semua bagian materi! 📚', 'wrong');
-    return;
-  }
 
   document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
   const el = document.getElementById('scene-' + n);
@@ -124,10 +113,6 @@ function gotoMissions() {
 }
 
 function gotoMission(n) {
-  // Lock check
-  if (n === 2 && !state.m1Done) { showToast('Selesaikan Misi 1 dulu!', 'wrong'); return; }
-  if (n === 3 && !state.m2Done) { showToast('Selesaikan Misi 2 dulu!', 'wrong'); return; }
-
   document.querySelectorAll('.mission-pane').forEach(p => p.classList.remove('active'));
   const pane = document.getElementById('mission-' + n);
   if (pane) pane.classList.add('active');
@@ -136,12 +121,28 @@ function gotoMission(n) {
   updateMissionTabs();
 }
 
+// Shortcut dari top bar: langsung ke misi tanpa lock
+function goToMissionShortcut(n) {
+  // Simpan posisi terakhir di materi agar bisa kembali
+  showScreen('missions');
+  // Inisialisasi misi jika belum pernah diinisialisasi
+  if (n === 1 && !state.m1Answered && state.m1Level === 1) initMission1();
+  if (n === 2 && state.m2Level === 1 && state.m2Items.length === 0) initMission2();
+  if (n === 3 && state.m3Level === 1 && state.m3Grid.length === 0) initMission3();
+  gotoMission(n);
+}
+
+// Kembali ke materi di slide terakhir
+function backToMateri() {
+  showScreen('materi');
+  // Tampilkan scene terakhir yang aktif
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('scene-' + state.currentScene);
+  if (el) el.classList.add('active');
+}
+
 function updateTopBar() {
   const s = state;
-  // Progress steps
-  const steps = {
-    'm1': s.m1Done, 'm2': s.m2Done, 'm3': s.m3Done
-  };
   const psMateri = document.getElementById('ps-materi');
   const psM1 = document.getElementById('ps-m1');
   const psM2 = document.getElementById('ps-m2');
@@ -153,14 +154,18 @@ function updateTopBar() {
 
   if (s.currentScreen === 'welcome' || s.currentScreen === 'materi') {
     if (psMateri) psMateri.classList.add('active');
+    // Misi tetap bisa diklik (tidak locked) — hanya tandai done jika sudah selesai
+    if (psM1 && s.m1Done) psM1.classList.add('done');
+    if (psM2 && s.m2Done) psM2.classList.add('done');
+    if (psM3 && s.m3Done) psM3.classList.add('done');
   } else if (s.currentScreen === 'missions' || s.currentScreen === 'finale') {
     if (psMateri) psMateri.classList.add('done');
     if (s.m1Done) { if (psM1) psM1.classList.add('done'); }
-    else { if (psM1) psM1.classList.add(s.currentMission === 1 ? 'active' : 'locked'); }
+    else if (psM1 && s.currentMission === 1) psM1.classList.add('active');
     if (s.m2Done) { if (psM2) psM2.classList.add('done'); }
-    else { if (psM2) psM2.classList.add(s.m1Done && s.currentMission === 2 ? 'active' : 'locked'); }
+    else if (psM2 && s.currentMission === 2) psM2.classList.add('active');
     if (s.m3Done) { if (psM3) psM3.classList.add('done'); }
-    else { if (psM3) psM3.classList.add(s.m2Done && s.currentMission === 3 ? 'active' : 'locked'); }
+    else if (psM3 && s.currentMission === 3) psM3.classList.add('active');
   }
 
   // Score
@@ -196,8 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showScreen('materi');
       initScene2();
       initAlgorithmReorder();
-      initDebug();
-      initDebugReorder();
     });
   }
 
@@ -258,22 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
       el.style.cursor = 'pointer';
     }
   });
-
-  // Name input
-  const nameInput = document.getElementById('name-input');
-  if (nameInput) {
-    nameInput.addEventListener('input', function() {
-      const certName = document.getElementById('cert-name');
-      if (certName) certName.textContent = this.value || 'Nama Kelompok';
-    });
-  }
-
-  // Set date
-  const certDate = document.getElementById('cert-date');
-  if (certDate) {
-    const now = new Date();
-    certDate.textContent = now.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
-  }
 
   // Init
   updateTopBar();
@@ -523,9 +510,6 @@ function moveItem(prefix, idx, dir) {
   } else if (prefix === 'm2') {
     items = state.m2Items;
     containerId = 'm2-reorder';
-  } else if (prefix === 'debug') {
-    items = state.debugItems;
-    containerId = 'debug-reorder';
   } else {
     return;
   }
@@ -536,7 +520,7 @@ function moveItem(prefix, idx, dir) {
   renderReorderList(containerId, items, prefix);
 
   // Clear feedback on move
-  const fbMap = { algo: 'algo-feedback', m2: 'm2-feedback', debug: 'debug-p2-fb' };
+  const fbMap = { algo: 'algo-feedback', m2: 'm2-feedback' };
   const fb = document.getElementById(fbMap[prefix]);
   if (fb) { fb.classList.add('hidden'); fb.classList.remove('correct','wrong'); }
 }
@@ -567,86 +551,6 @@ function checkAlgorithm() {
   }
 }
 
-/* ─────────────────────────────────────────────────────────────
-   9. SCENE 3E — DEBUGGING
-   ───────────────────────────────────────────────────────────── */
-const debugDataFull = [
-  { text: 'Siapkan gelas bersih', emoji: '🫙', order: 1 },
-  { text: 'Masukkan bubuk cokelat', emoji: '🍫', order: 2 },
-  { text: 'Tuang susu ke gelas', emoji: '🥛', order: 3 },
-  { text: 'Aduk hingga merata', emoji: '🥄', order: 4 },
-  { text: 'Minum susu cokelatnya', emoji: '☕', order: 5 },
-];
-
-function initDebug() {
-  state.bugFound = false;
-  state.debugP1Done = false;
-  state.debugP2Done = false;
-}
-
-function initDebugReorder() {
-  // Scramble for phase 2
-  state.debugItems = shuffle(debugDataFull);
-}
-
-function foundBug(el) {
-  if (el.dataset.bug !== 'true') { wrongBug(el); return; }
-  if (state.bugFound) return;
-  state.bugFound = true;
-
-  // Highlight the bug
-  el.style.borderColor = 'var(--accent-red)';
-  el.style.background = '#FDECEA';
-  el.style.pointerEvents = 'none';
-  document.querySelectorAll('#debug-scrambled .reorder-item').forEach(r => r.style.pointerEvents = 'none');
-
-  const fbEl = document.getElementById('debug-p1-fb');
-  setFeedback(fbEl, true, 'BUG FOUND! 🐛',
-    'Langkah 01 adalah bug! Kita tidak bisa minum susu sebelum menyiapkan gelas, menuang susu, dan mengaduknya!');
-  fbEl.classList.remove('hidden');
-
-  addScore(3);
-  showToast('Bug ditemukan! 🐛', 'correct');
-  state.debugP1Done = true;
-
-  // Show phase 2 after delay
-  setTimeout(() => {
-    const p2 = document.getElementById('debug-phase-2');
-    if (p2) {
-      p2.classList.remove('hidden');
-      renderReorderList('debug-reorder', state.debugItems, 'debug');
-    }
-  }, 1200);
-}
-
-function wrongBug(el) {
-  el.classList.add('selected-wrong');
-  showToast('Bukan itu! Coba perhatikan urutannya… 🐛', 'wrong');
-  setTimeout(() => el.classList.remove('selected-wrong'), 800);
-}
-
-function checkDebug() {
-  const correct = state.debugItems.every((item, idx) => item.order === idx + 1);
-  const fbEl = document.getElementById('debug-p2-fb');
-  const nextBtn = document.getElementById('btn-goto-scene4');
-
-  if (correct) {
-    document.querySelectorAll('#debug-reorder .reorder-item').forEach(el => el.classList.add('is-right'));
-    setFeedback(fbEl, true, 'LUAR BIASA! Bug diperbaiki! 🎉',
-      'Sekarang urutannya benar! Proses menemukan dan memperbaiki bug ini disebut DEBUGGING!');
-    addScore(5);
-    showToast('Debugging berhasil! 🐛✓', 'correct');
-    state.debugP2Done = true;
-    if (nextBtn) nextBtn.disabled = false;
-  } else {
-    document.querySelectorAll('#debug-reorder .reorder-item').forEach((el, idx) => {
-      el.classList.remove('is-right','is-wrong');
-      el.classList.add(state.debugItems[idx].order === idx+1 ? 'is-right' : 'is-wrong');
-    });
-    setFeedback(fbEl, false, 'Belum benar ✗', 'Masih ada langkah yang belum di posisi yang tepat!');
-    showToast('Masih ada yang perlu diperbaiki! 🐛', 'wrong');
-  }
-}
 
 /* ─────────────────────────────────────────────────────────────
    10. MISSION 1 — DETEKTIF POLA
@@ -1250,12 +1154,6 @@ function renderFinale() {
   updateBar('bar-m2', 'lbl-m2', state.m2Score, m2max);
   updateBar('bar-m3', 'lbl-m3', state.m3Score, m3max);
 
-  // Certificate date
-  const certDate = document.getElementById('cert-date');
-  if (certDate) {
-    const now = new Date();
-    certDate.textContent = 'Diselesaikan pada: ' + now.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
-  }
 
   setTimeout(() => {
     updateBar('bar-m1', 'lbl-m1', state.m1Score, m1max, true);
@@ -1271,22 +1169,14 @@ function updateBar(barId, lblId, score, max, animate) {
   if (lbl) lbl.textContent = `${score}/${max}`;
 }
 
-function setName() {
-  const input = document.getElementById('name-input');
-  const certName = document.getElementById('cert-name');
-  if (!input || !certName) return;
-  const name = input.value.trim() || 'Nama Kelompok';
-  certName.textContent = name;
-  showToast(`Nama "${name}" sudah diset! ✓`, 'correct');
-}
 
 function restartAll() {
   // Reset state
   Object.assign(state, {
     currentScreen: 'welcome', currentScene: 1, currentSub: '3a', currentMission: 1,
-    logicAnswered: false, debugP1Done: false, debugP2Done: false,
+    logicAnswered: false,
     patternQ1Done: false, patternQ2Done: false,
-    algoItems: [], absSelected: [], debugItems: [], bugFound: false,
+    algoItems: [], absSelected: [],
     m1Level:1, m1Score:0, m1Answered:false,
     m2Level:1, m2Score:0, m2Items:[],
     m3Level:1, m3Score:0, m3Grid:[], m3Cmds:[], m3Running:false,
@@ -1297,8 +1187,6 @@ function restartAll() {
   // Re-init scenes
   initScene2();
   initAlgorithmReorder();
-  initDebug();
-  initDebugReorder();
   // Reset pattern quiz
   const q2 = document.getElementById('pattern-q2');
   if (q2) q2.classList.add('hidden');
@@ -1318,14 +1206,6 @@ function restartAll() {
   document.querySelectorAll('#abs-items .abs-item').forEach(b => b.classList.remove('selected','correct','dimmed'));
   const absFb = document.getElementById('abs-feedback');
   if (absFb) absFb.classList.add('hidden');
-  // Reset debug
-  document.getElementById('debug-phase-2')?.classList.add('hidden');
-  document.getElementById('debug-p1-fb')?.classList.add('hidden');
-  document.querySelectorAll('#debug-scrambled .reorder-item').forEach(r => {
-    r.style.pointerEvents = '';
-    r.style.borderColor = '';
-    r.style.background = '';
-  });
   // Reset progress
   updateTopBar();
 }

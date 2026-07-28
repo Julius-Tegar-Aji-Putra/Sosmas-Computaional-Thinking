@@ -17,11 +17,11 @@
   <div class="progress-steps" id="progress-steps">
     <div class="prog-step active" id="ps-materi" onclick="showScreen('materi')" style="cursor:pointer;" title="Kembali ke Materi">📖 Materi</div>
     <div class="prog-divider"></div>
-    <div class="prog-step locked" id="ps-m1" onclick="if(!this.classList.contains('locked')) { showScreen('missions'); gotoMission(1); }" style="cursor:pointer;" title="Misi 1">🔍 M1: Pola</div>
+    <div class="prog-step locked" id="ps-m1" onclick="goToMissionShortcut(1)" style="cursor:pointer;" title="Misi 1">🔍 M1: Pola</div>
     <div class="prog-divider"></div>
-    <div class="prog-step locked" id="ps-m2" onclick="if(!this.classList.contains('locked')) { showScreen('missions'); gotoMission(2); }" style="cursor:pointer;" title="Misi 2">🪜 M2: Langkah</div>
+    <div class="prog-step locked" id="ps-m2" onclick="goToMissionShortcut(2)" style="cursor:pointer;" title="Misi 2">🪜 M2: Langkah</div>
     <div class="prog-divider"></div>
-    <div class="prog-step locked" id="ps-m3" onclick="if(!this.classList.contains('locked')) { showScreen('missions'); gotoMission(3); }" style="cursor:pointer;" title="Misi 3">🤖 M3: Labirin</div>
+    <div class="prog-step locked" id="ps-m3" onclick="goToMissionShortcut(3)" style="cursor:pointer;" title="Misi 3">🤖 M3: Labirin</div>
   </div>
   <div class="score-chip">⭐ <span id="score-display">0</span></div>
 </div>
@@ -287,15 +287,14 @@
       <button class="tab-btn" data-tab="3b">🔍 2. Pola</button>
       <button class="tab-btn" data-tab="3c">🎯 3. Pilih</button>
       <button class="tab-btn" data-tab="3d">🪜 4. Langkah</button>
-      <button class="tab-btn" data-tab="3e">🐛 5. Bug</button>
     </div>
 
-    <!-- 3A: DECOMPOSITION -->
+    <!-- 3A: PECAH MASALAH -->
     <div id="sub-3a" class="subpane active" style="border-top:4px solid var(--accent-blue); padding-top:var(--sp-md);">
       <div class="scene-header">
         <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">A</span></div>
         <div class="scene-title-col">
-          <span class="stamp stamp-blue">DECOMPOSITION</span>
+          <span class="stamp stamp-blue">PECAH MASALAH</span>
           <h2>PECAH JADI KECIL!</h2>
         </div>
       </div>
@@ -362,7 +361,7 @@
       </div>
 
       <div class="takeaway">
-        <strong>💡 Decomposition</strong> = Memecah masalah besar menjadi bagian-bagian kecil yang lebih mudah diselesaikan satu per satu.
+        <strong>💡 Pecah Masalah</strong> = Memecah masalah besar menjadi bagian-bagian kecil yang lebih mudah diselesaikan satu per satu.
       </div>
       <div class="nav-row">
         <button class="btn btn-ghost" onclick="gotoScene(2)">← LOGIKA</button>
@@ -370,12 +369,12 @@
       </div>
     </div>
 
-    <!-- 3B: PATTERN RECOGNITION -->
+    <!-- 3B: CARI POLA -->
     <div id="sub-3b" class="subpane" style="border-top:4px solid var(--accent-yellow); padding-top:var(--sp-md);">
       <div class="scene-header">
         <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">B</span></div>
         <div class="scene-title-col">
-          <span class="stamp stamp-yellow">PATTERN RECOGNITION</span>
+          <span class="stamp stamp-yellow">CARI POLA</span>
           <h2>CARI POLA!</h2>
         </div>
       </div>
@@ -455,7 +454,7 @@
       </div>
 
       <div class="takeaway" style="margin-top:var(--sp-md);">
-        <strong>💡 Pattern Recognition</strong> = Kemampuan menemukan sesuatu yang berulang atau memiliki kesamaan. Komputer juga pakai ini untuk mengenali wajah, suara, dan tulisan!
+        <strong>💡 Cari Pola</strong> = Kemampuan menemukan sesuatu yang berulang atau memiliki kesamaan. Komputer juga pakai ini untuk mengenali wajah, suara, dan tulisan!
       </div>
       <div class="nav-row">
         <button class="btn btn-ghost" onclick="switchTab('3a')">← PECAH</button>
@@ -463,12 +462,12 @@
       </div>
     </div>
 
-    <!-- 3C: ABSTRACTION -->
+    <!-- 3C: PILIH YANG PENTING -->
     <div id="sub-3c" class="subpane" style="border-top:4px solid var(--accent-orange); padding-top:var(--sp-md);">
       <div class="scene-header">
         <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">C</span></div>
         <div class="scene-title-col">
-          <span class="stamp stamp-orange">ABSTRACTION</span>
+          <span class="stamp stamp-orange">PILIH YANG PENTING</span>
           <h2>PILIH YANG PENTING!</h2>
         </div>
       </div>
@@ -522,7 +521,7 @@
       <div id="abs-feedback" class="feedback-box hidden"></div>
 
       <div class="takeaway" style="margin-top:var(--sp-md);">
-        <strong>💡 Abstraction</strong> = Memilih dan fokus hanya pada informasi yang <em>penting</em>, mengabaikan yang tidak perlu. Ini membantu kita berpikir lebih efisien!
+        <strong>💡 Pilih Yang Penting</strong> = Memilih dan fokus hanya pada informasi yang <em>penting</em>, mengabaikan yang tidak perlu. Ini membantu kita berpikir lebih efisien!
       </div>
       <div class="nav-row">
         <button class="btn btn-ghost" onclick="switchTab('3b')">← POLA</button>
@@ -530,12 +529,12 @@
       </div>
     </div>
 
-    <!-- 3D: ALGORITHM -->
+    <!-- 3D: SUSUN LANGKAH -->
     <div id="sub-3d" class="subpane" style="border-top:4px solid var(--accent-green); padding-top:var(--sp-md);">
       <div class="scene-header">
         <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">D</span></div>
         <div class="scene-title-col">
-          <span class="stamp stamp-green">ALGORITHM</span>
+          <span class="stamp stamp-green">SUSUN LANGKAH</span>
           <h2>SUSUN LANGKAH!</h2>
         </div>
       </div>
@@ -570,95 +569,11 @@
       <div id="algo-feedback" class="feedback-box hidden"></div>
 
       <div class="takeaway" style="margin-top:var(--sp-md);">
-        <strong>💡 Algorithm</strong> = Urutan langkah logis yang disusun untuk menyelesaikan masalah. Komputer hanya bisa bekerja jika instruksinya benar dan berurutan!
+        <strong>💡 Susun Langkah</strong> = Urutan langkah logis yang disusun untuk menyelesaikan masalah. Komputer hanya bisa bekerja jika instruksinya benar dan berurutan!
       </div>
       <div class="nav-row">
         <button class="btn btn-ghost" onclick="switchTab('3c')">← PILIH</button>
-        <button class="btn btn-green" onclick="switchTab('3e')">5. CARI BUG →</button>
-      </div>
-    </div>
-
-    <!-- 3E: DEBUGGING -->
-    <div id="sub-3e" class="subpane" style="border-top:4px solid var(--accent-red); padding-top:var(--sp-md);">
-      <div class="scene-header">
-        <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">E</span></div>
-        <div class="scene-title-col">
-          <span class="stamp stamp-red">DEBUGGING</span>
-          <h2>CARI &amp; PERBAIKI BUG!</h2>
-        </div>
-      </div>
-
-      <div class="mascot-row">
-        <div class="logi-wrap">
-          <svg viewBox="0 0 80 80" width="55" height="55" aria-hidden="true">
-            <rect x="10" y="10" width="60" height="40" rx="6" fill="#FFF9EA" stroke="#202124" stroke-width="2.5"/>
-            <rect x="17" y="16" width="46" height="27" rx="4" fill="#202124"/>
-            <circle cx="32" cy="28" r="5" fill="#FFC83D"/>
-            <circle cx="48" cy="28" r="5" fill="#FFC83D"/>
-            <!-- Sad mouth -->
-            <path d="M 35 38 Q 40 33 45 38" stroke="#F15A4A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <rect x="20" y="52" width="40" height="22" rx="4" fill="#F15A4A" stroke="#202124" stroke-width="2.5"/>
-          </svg>
-        </div>
-        <div class="speech-bubble">
-          "Ada yang tidak beres! <strong>Bisakah kamu menemukan langkah yang aneh/salah?</strong> Klik langkahnya!"
-        </div>
-      </div>
-
-      <!-- Phase 1: Find the bug -->
-      <div id="debug-phase-1">
-        <div class="instruction-note">📌 Klik langkah yang SALAH / tidak logis di urutan membuat susu cokelat ini:</div>
-
-        <div class="reorder-list" id="debug-scrambled">
-          <div class="reorder-item is-bug" data-bug="true" onclick="foundBug(this)">
-            <div class="reorder-num">01</div>
-            <div class="reorder-emoji">☕</div>
-            <div class="reorder-text">Minum susu cokelatnya</div>
-            <div style="font-size:0.8rem; color:#F15A4A; margin-left:auto; font-weight:700;">Klik jika salah!</div>
-          </div>
-          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
-            <div class="reorder-num">02</div>
-            <div class="reorder-emoji">🥛</div>
-            <div class="reorder-text">Tuang susu ke gelas</div>
-          </div>
-          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
-            <div class="reorder-num">03</div>
-            <div class="reorder-emoji">🍫</div>
-            <div class="reorder-text">Masukkan bubuk cokelat</div>
-          </div>
-          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
-            <div class="reorder-num">04</div>
-            <div class="reorder-emoji">🥄</div>
-            <div class="reorder-text">Aduk hingga rata</div>
-          </div>
-          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
-            <div class="reorder-num">05</div>
-            <div class="reorder-emoji">🫙</div>
-            <div class="reorder-text">Siapkan gelas bersih</div>
-          </div>
-        </div>
-
-        <div id="debug-p1-fb" class="feedback-box hidden"></div>
-      </div>
-
-      <!-- Phase 2: Fix the order -->
-      <div id="debug-phase-2" class="hidden">
-        <div class="instruction-note" style="border-color:var(--accent-green);">
-          🐛 Bug ditemukan! Sekarang <strong>urutkan yang benar</strong> menggunakan ⬆ ⬇:
-        </div>
-        <div class="reorder-list" id="debug-reorder"></div>
-        <div style="text-align:center; margin-top:var(--sp-md);">
-          <button class="btn btn-green btn-sm" onclick="checkDebug()">✓ CEK PERBAIKAN</button>
-        </div>
-        <div id="debug-p2-fb" class="feedback-box hidden"></div>
-      </div>
-
-      <div class="takeaway" style="margin-top:var(--sp-md);">
-        <strong>💡 Debugging</strong> = Proses menemukan kesalahan (<em>bug</em>) dalam urutan atau instruksi, lalu memperbaikinya agar berjalan dengan benar.
-      </div>
-      <div class="nav-row">
-        <button class="btn btn-ghost" onclick="switchTab('3d')">← LANGKAH</button>
-        <button class="btn btn-red" id="btn-goto-scene4" onclick="gotoScene(4)" disabled>LIHAT RINGKASAN →</button>
+        <button class="btn btn-green" onclick="gotoScene(4)">LIHAT RINGKASAN →</button>
       </div>
     </div>
 
@@ -676,27 +591,22 @@
       <div class="summary-tile">
         <span class="tile-icon">🧩</span>
         <h4>Pecah Masalah</h4>
-        <p>Decomposition</p>
+        <p>Masalah besar dipecah jadi bagian kecil</p>
       </div>
       <div class="summary-tile">
         <span class="tile-icon">🔍</span>
         <h4>Cari Pola</h4>
-        <p>Pattern Recognition</p>
+        <p>Temukan sesuatu yang berulang</p>
       </div>
       <div class="summary-tile">
         <span class="tile-icon">🎯</span>
-        <h4>Pilih Penting</h4>
-        <p>Abstraction</p>
+        <h4>Pilih Yang Penting</h4>
+        <p>Fokus pada informasi penting saja</p>
       </div>
       <div class="summary-tile">
         <span class="tile-icon">🪜</span>
         <h4>Susun Langkah</h4>
-        <p>Algorithm</p>
-      </div>
-      <div class="summary-tile">
-        <span class="tile-icon">🐛</span>
-        <h4>Perbaiki Bug</h4>
-        <p>Debugging</p>
+        <p>Buat urutan langkah yang logis</p>
       </div>
     </div>
 
@@ -743,6 +653,10 @@
       </div>
     </div>
 
+    <div style="margin-bottom:var(--sp-sm);">
+      <button class="btn btn-ghost btn-sm" onclick="backToMateri()">← Kembali ke Materi</button>
+    </div>
+
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-md);">
         <span class="stamp stamp-ink" id="m1-level-label">Level 1 dari 3</span>
@@ -770,6 +684,10 @@
         <div class="level-dot" id="m2-dot-2">2</div>
         <div class="level-dot" id="m2-dot-3">3</div>
       </div>
+    </div>
+
+    <div style="margin-bottom:var(--sp-sm);">
+      <button class="btn btn-ghost btn-sm" onclick="gotoMission(1)">← Kembali ke Misi 1</button>
     </div>
 
     <div class="card">
@@ -802,6 +720,10 @@
         <div class="level-dot" id="m3-dot-2">2</div>
         <div class="level-dot" id="m3-dot-3">3</div>
       </div>
+    </div>
+
+    <div style="margin-bottom:var(--sp-sm);">
+      <button class="btn btn-ghost btn-sm" onclick="gotoMission(2)">← Kembali ke Misi 2</button>
     </div>
 
     <div class="mission3-layout">
@@ -930,34 +852,8 @@
     </div>
   </div>
 
-  <!-- Certificate -->
-  <div class="certificate card" id="sertifikat">
-    <div style="margin-bottom:var(--sp-md);">
-      <span class="stamp stamp-green">SERTIFIKAT DIGITAL</span>
-    </div>
-    <h2 class="certificate-title">PROGRAMMER CILIK ADVENTURE</h2>
-    <p style="font-size:0.9rem; color:#666; margin-bottom:var(--sp-sm);">Dengan bangga diberikan kepada kelompok:</p>
-    <div class="certificate-name" id="cert-name">Nama Kelompok</div>
-    <p style="font-size:0.9rem; margin:var(--sp-sm) 0;">Telah berhasil menyelesaikan semua misi dan mempelajari:</p>
-    <ul class="cert-checklist">
-      <li><span class="cert-check">✓</span> Berpikir Logis</li>
-      <li><span class="cert-check">✓</span> Pattern Recognition — Menemukan Pola</li>
-      <li><span class="cert-check">✓</span> Decomposition — Memecah Masalah</li>
-      <li><span class="cert-check">✓</span> Abstraction — Memilih Informasi Penting</li>
-      <li><span class="cert-check">✓</span> Algorithm — Menyusun Langkah</li>
-      <li><span class="cert-check">✓</span> Debugging — Menemukan &amp; Memperbaiki Bug</li>
-    </ul>
-    <div class="cert-date" id="cert-date"></div>
-  </div>
-
-  <!-- Name input + actions -->
-  <div class="name-input-row no-print">
-    <input type="text" class="name-input" id="name-input" placeholder="Tulis nama kelompokmu..." maxlength="40">
-    <button class="btn btn-yellow" onclick="setName()">✓ SET NAMA</button>
-  </div>
-
-  <div style="display:flex; gap:var(--sp-sm); justify-content:center; flex-wrap:wrap; margin-bottom:var(--sp-xl);" class="no-print">
-    <button class="btn btn-ink" onclick="window.print()">🖨️ CETAK SERTIFIKAT</button>
+  <!-- Actions -->
+  <div style="display:flex; gap:var(--sp-sm); justify-content:center; flex-wrap:wrap; margin-bottom:var(--sp-xl);">
     <button class="btn btn-blue" onclick="showScreen('materi')">📖 KEMBALI KE MATERI</button>
     <button class="btn btn-ghost" onclick="restartAll()">🔄 MAIN LAGI</button>
   </div>
