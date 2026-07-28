@@ -896,6 +896,7 @@ a {
   font-size: clamp(1rem, 4vw, 1.8rem);
   position: relative;
   transition: background 0.15s;
+  aspect-ratio: 1 / 1;
 }
 .maze-cell.wall {
   background: var(--text-ink);

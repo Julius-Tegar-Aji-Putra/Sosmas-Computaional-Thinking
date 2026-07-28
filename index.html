@@ -753,19 +753,8 @@
             <div></div>
           </div>
 
-          <div style="margin-top:var(--sp-md);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-xs);">
-              <span style="font-family:var(--font-display); font-size:0.9rem;">PERINTAH (<span id="cmd-count">0</span>/10):</span>
-              <button class="btn btn-ghost btn-sm" onclick="removeLastCmd()">⌫ Hapus</button>
-            </div>
-            <div class="cmd-queue-box" id="cmd-queue">
-              <span class="cmd-placeholder">Belum ada perintah...</span>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:var(--sp-sm); margin-top:var(--sp-md);">
-            <button class="btn btn-yellow" onclick="runRobot()" style="flex:1;">🚀 JALANKAN!</button>
-            <button class="btn btn-ghost btn-sm" onclick="resetMaze()">↺</button>
+          <div style="display:flex; justify-content:center; margin-top:var(--sp-md);">
+            <button class="btn btn-ghost" onclick="resetMaze()">↺ RESET POSISI</button>
           </div>
         </div>
       </div>

@@ -668,7 +668,12 @@ function renderM1Level() {
     lvl.choices.forEach(c => {
       const btn = document.createElement('button');
       btn.className = 'choice-card';
-      btn.innerHTML = `<span class="choice-emoji">${c.text}</span>`;
+      const parts = c.text.split(' ');
+      if (parts.length > 1) {
+        btn.innerHTML = `<span class="choice-emoji">${parts[0]}</span> <span>${parts.slice(1).join(' ')}</span>`;
+      } else {
+        btn.innerHTML = `<span class="choice-emoji">${c.text}</span>`;
+      }
       btn.dataset.correct = c.correct;
       btn.addEventListener('click', () => handleM1Choice(btn, c.correct, lvl));
       choicesEl.appendChild(btn);
@@ -1014,8 +1019,7 @@ function renderM3Level() {
     }
   }
 
-  // Reset cmd queue
-  renderCmdQueue();
+  // Cleared cmd queue
 
   const fb = document.getElementById('m3-maze-fb');
   if (fb) { fb.classList.add('hidden'); fb.classList.remove('correct','wrong'); }
@@ -1024,121 +1028,62 @@ function renderM3Level() {
   setDpadEnabled(true);
 }
 
-function renderCmdQueue() {
-  const qEl = document.getElementById('cmd-queue');
-  const countEl = document.getElementById('cmd-count');
-  if (!qEl) return;
-
-  const dirMap = { U:'⬆', D:'⬇', L:'⬅', R:'➡' };
-  if (state.m3Cmds.length === 0) {
-    qEl.innerHTML = '<span class="cmd-placeholder">Belum ada perintah...</span>';
-  } else {
-    qEl.innerHTML = state.m3Cmds.map(c =>
-      `<div class="cmd-chip">${dirMap[c] || c}</div>`
-    ).join('');
-  }
-  if (countEl) countEl.textContent = state.m3Cmds.length;
-}
-
 function addCmd(dir) {
-  const lvl = m3Levels[state.m3Level - 1];
-  if (state.m3Cmds.length >= lvl.maxCmds) {
-    showToast(`Maksimal ${lvl.maxCmds} perintah!`, 'wrong');
-    return;
-  }
   if (state.m3Running) return;
-  state.m3Cmds.push(dir);
-  renderCmdQueue();
-}
-
-function removeLastCmd() {
-  if (state.m3Running || state.m3Cmds.length === 0) return;
-  state.m3Cmds.pop();
-  renderCmdQueue();
-}
-
-function resetMaze() {
-  renderM3Level();
-}
-
-function setDpadEnabled(enabled) {
-  ['dpad-up','dpad-down','dpad-left','dpad-right'].forEach(id => {
-    const btn = document.getElementById(id);
-    if (btn) btn.disabled = !enabled;
-  });
-}
-
-async function runRobot() {
-  if (state.m3Running || state.m3Cmds.length === 0) return;
-  state.m3Running = true;
-  setDpadEnabled(false);
 
   const lvlDef = m3Levels[state.m3Level - 1];
-  let pos = { ...state.m3LoPos };
   const dirDelta = { U:[-1,0], D:[1,0], L:[0,-1], R:[0,1] };
+  const [dr, dc] = dirDelta[dir];
+  const nr = state.m3LoPos.r + dr;
+  const nc = state.m3LoPos.c + dc;
 
-  // Clear highlights
   document.querySelectorAll('.maze-cell').forEach(c => c.classList.remove('explosion'));
 
-  for (let i = 0; i < state.m3Cmds.length; i++) {
-    await delay(380);
-    const cmd = state.m3Cmds[i];
-    const [dr, dc] = dirDelta[cmd];
-    const nr = pos.r + dr;
-    const nc = pos.c + dc;
+  if (nr < 0 || nr >= state.m3Rows || nc < 0 || nc >= state.m3Cols || lvlDef.grid[nr][nc] === 1) {
+    const curCell = document.getElementById(`cell-${state.m3LoPos.r}-${state.m3LoPos.c}`);
+    if (curCell) { curCell.classList.add('explosion'); curCell.textContent = '💥'; }
+    const fbEl = document.getElementById('m3-maze-fb');
+    setFeedback(fbEl, false, 'Ouch! Logi menabrak! 💥', 'Logi menabrak dinding! Klik RESET POSISI untuk coba lagi.');
+    fbEl.classList.remove('hidden');
+    showToast('Logi nabrak! Reset ya! 💥', 'wrong');
+    state.m3Running = true; 
+    setDpadEnabled(false);
+    return;
+  }
 
-    // Out of bounds or wall
-    if (nr < 0 || nr >= state.m3Rows || nc < 0 || nc >= state.m3Cols ||
-        lvlDef.grid[nr][nc] === 1) {
-      // Collision!
-      const curCell = document.getElementById(`cell-${pos.r}-${pos.c}`);
-      if (curCell) { curCell.classList.add('explosion'); curCell.textContent = '💥'; }
-      await delay(500);
-      const fbEl = document.getElementById('m3-maze-fb');
-      setFeedback(fbEl, false, 'Ouch! Logi menabrak! 💥',
-        'Logi menabrak dinding! Reset dan coba perintah yang berbeda. Perhatikan posisi dinding 🧱');
-      fbEl.classList.remove('hidden');
-      showToast('Logi nabrak! Coba lagi! 💥', 'wrong');
-      state.m3Running = false;
-      setDpadEnabled(true);
-      return;
+  const oldCell = document.getElementById(`cell-${state.m3LoPos.r}-${state.m3LoPos.c}`);
+  if (oldCell) {
+    oldCell.classList.remove('logi-here','explosion');
+    oldCell.textContent = '';
+    if (state.m3LoPos.r === state.m3Goal.r && state.m3LoPos.c === state.m3Goal.c) {
+      oldCell.classList.add('goal');
+      oldCell.textContent = '🏠';
     }
+  }
 
-    // Move Logi
-    const oldCell = document.getElementById(`cell-${pos.r}-${pos.c}`);
-    if (oldCell) {
-      oldCell.classList.remove('logi-here','explosion');
-      oldCell.textContent = '';
-      // Restore goal if we were there
-      if (pos.r === state.m3Goal.r && pos.c === state.m3Goal.c) {
-        oldCell.classList.add('goal');
-        oldCell.textContent = '🏠';
-      }
-    }
+  state.m3LoPos = { r: nr, c: nc };
 
-    pos = { r: nr, c: nc };
+  const newCell = document.getElementById(`cell-${state.m3LoPos.r}-${state.m3LoPos.c}`);
+  if (newCell) {
+    newCell.classList.remove('goal');
+    newCell.classList.add('logi-here');
+    newCell.textContent = '🤖';
+  }
 
-    const newCell = document.getElementById(`cell-${pos.r}-${pos.c}`);
-    if (newCell) {
-      newCell.classList.remove('goal');
-      newCell.classList.add('logi-here');
-      newCell.textContent = '🤖';
-    }
-
-    // Check goal
-    if (pos.r === state.m3Goal.r && pos.c === state.m3Goal.c) {
-      await delay(300);
+  if (state.m3LoPos.r === state.m3Goal.r && state.m3LoPos.c === state.m3Goal.c) {
+    state.m3Running = true;
+    setDpadEnabled(false);
+    
+    setTimeout(() => {
       const fbEl = document.getElementById('m3-maze-fb');
       const pts = 14;
       state.m3Score += pts;
       addScore(pts);
 
-      setFeedback(fbEl, true, 'BERHASIL! Logi sampai ke rumah! 🏠🎉',
-        `Perintah yang kamu buat tadi adalah ALGORITMA untuk labirin! Skor +${pts}!`);
+      setFeedback(fbEl, true, 'BERHASIL! Logi sampai ke rumah! 🏠🎉', `Skor +${pts}! Hebat!`);
       fbEl.classList.remove('hidden');
       showToast('Logi sampai! Hebat sekali! 🏠', 'correct');
 
-      // Level dots
       const dot = document.getElementById(`m3-dot-${state.m3Level}`);
       if (dot) { dot.classList.remove('active'); dot.classList.add('done'); }
 
@@ -1151,20 +1096,19 @@ async function runRobot() {
           completeMission3();
         }
       }, 2000);
-
-      state.m3Running = false;
-      return;
-    }
+    }, 300);
   }
+}
 
-  // Ran out of commands without reaching goal
-  const fbEl = document.getElementById('m3-maze-fb');
-  setFeedback(fbEl, false, 'Perintah habis, belum sampai! 🤖',
-    'Logi kehabisan perintah sebelum mencapai rumah. Reset dan tambah lebih banyak langkah!');
-  fbEl.classList.remove('hidden');
-  showToast('Perintah habis! Tambah langkah lagi!', 'wrong');
-  state.m3Running = false;
-  setDpadEnabled(true);
+function resetMaze() {
+  renderM3Level();
+}
+
+function setDpadEnabled(enabled) {
+  ['dpad-up','dpad-down','dpad-left','dpad-right'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.disabled = !enabled;
+  });
 }
 
 function delay(ms) {
