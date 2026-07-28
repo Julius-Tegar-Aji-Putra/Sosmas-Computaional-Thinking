@@ -488,22 +488,97 @@ function renderReorderList(containerId, items, prefix) {
   const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = '';
-  items.forEach((item, idx) => {
-    const div = document.createElement('div');
-    div.className = 'reorder-item';
-    div.innerHTML = `
-      <div class="arrow-btns">
-        <button class="arrow-btn" onclick="moveItem('${prefix}',${idx},-1)" ${idx===0?'disabled':''}
-          aria-label="Naik">⬆</button>
-        <button class="arrow-btn" onclick="moveItem('${prefix}',${idx},1)" ${idx===items.length-1?'disabled':''}
-          aria-label="Turun">⬇</button>
-      </div>
-      <div class="reorder-num">${idx+1}</div>
-      <div class="reorder-emoji">${item.emoji}</div>
-      <div class="reorder-text">${item.text}</div>
-    `;
-    container.appendChild(div);
-  });
+
+  if (prefix === 'm2') {
+    // ── Drag-and-drop mode for Mission 2 ──
+    container.setAttribute('data-prefix', prefix);
+
+    items.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'reorder-item draggable';
+      div.setAttribute('draggable', 'true');
+      div.dataset.idx = idx;
+      div.innerHTML = `
+        <div class="drag-handle">⠿</div>
+        <div class="reorder-num">${idx + 1}</div>
+        <div class="reorder-emoji">${item.emoji}</div>
+        <div class="reorder-text">${item.text}</div>
+      `;
+
+      div.addEventListener('dragstart', (e) => {
+        div.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', idx);
+        container.dataset.dragIdx = idx;
+      });
+      div.addEventListener('dragend', () => {
+        div.classList.remove('dragging');
+        container.querySelectorAll('.reorder-item').forEach(el => el.classList.remove('drag-over'));
+      });
+      div.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        container.querySelectorAll('.reorder-item').forEach(el => el.classList.remove('drag-over'));
+        div.classList.add('drag-over');
+      });
+      div.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const fromIdx = parseInt(container.dataset.dragIdx);
+        const toIdx = parseInt(div.dataset.idx);
+        if (fromIdx === toIdx) return;
+
+        const arr = prefix === 'm2' ? state.m2Items : state.algoItems;
+        const [moved] = arr.splice(fromIdx, 1);
+        arr.splice(toIdx, 0, moved);
+
+        // Clear feedback on move
+        const fbMap = { algo: 'algo-feedback', m2: 'm2-feedback' };
+        const fb = document.getElementById(fbMap[prefix]);
+        if (fb) { fb.classList.add('hidden'); fb.classList.remove('correct','wrong'); }
+
+        renderReorderList(containerId, arr, prefix);
+      });
+
+      container.appendChild(div);
+    });
+
+    // Touch support (mobile swap on tap)
+    let touchStartIdx = null;
+    container.querySelectorAll('.reorder-item').forEach(div => {
+      div.addEventListener('touchstart', () => { touchStartIdx = parseInt(div.dataset.idx); }, { passive: true });
+      div.addEventListener('touchend', () => {
+        const toIdx = parseInt(div.dataset.idx);
+        if (touchStartIdx !== null && touchStartIdx !== toIdx) {
+          const arr = state.m2Items;
+          const [moved] = arr.splice(touchStartIdx, 1);
+          arr.splice(toIdx, 0, moved);
+          const fb = document.getElementById('m2-feedback');
+          if (fb) { fb.classList.add('hidden'); fb.classList.remove('correct','wrong'); }
+          renderReorderList(containerId, arr, prefix);
+        }
+        touchStartIdx = null;
+      }, { passive: true });
+    });
+
+  } else {
+    // ── Arrow-button mode for algo in Materi ──
+    items.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'reorder-item';
+      div.innerHTML = `
+        <div class="arrow-btns">
+          <button class="arrow-btn" onclick="moveItem('${prefix}',${idx},-1)" ${idx===0?'disabled':''}
+            aria-label="Naik">⬆</button>
+          <button class="arrow-btn" onclick="moveItem('${prefix}',${idx},1)" ${idx===items.length-1?'disabled':''}
+            aria-label="Turun">⬇</button>
+        </div>
+        <div class="reorder-num">${idx+1}</div>
+        <div class="reorder-emoji">${item.emoji}</div>
+        <div class="reorder-text">${item.text}</div>
+      `;
+      container.appendChild(div);
+    });
+  }
 }
 
 function moveItem(prefix, idx, dir) {

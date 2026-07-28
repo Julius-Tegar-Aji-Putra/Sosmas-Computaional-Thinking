@@ -868,6 +868,36 @@ a {
 .arrow-btn:hover { background: var(--accent-yellow); }
 .arrow-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
+/* Drag-and-drop styles for M2 */
+.reorder-item.draggable {
+  cursor: grab;
+  user-select: none;
+}
+.reorder-item.draggable:active {
+  cursor: grabbing;
+}
+.reorder-item.dragging {
+  opacity: 0.4;
+  transform: scale(0.97);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+.reorder-item.drag-over {
+  border-color: var(--accent-blue);
+  background: #EAF2FF;
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(59,130,246,0.25);
+}
+.drag-handle {
+  font-size: 1.3rem;
+  color: #aaa;
+  cursor: grab;
+  padding: 0 4px;
+  flex-shrink: 0;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.drag-handle:hover { color: var(--accent-blue); }
+
 /* -------------------------------------------------------------------------
    18. MAZE / GRID BOARD (Mission 3)
    ------------------------------------------------------------------------- */
