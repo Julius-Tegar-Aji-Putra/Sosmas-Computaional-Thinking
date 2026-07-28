@@ -119,6 +119,7 @@ function gotoMission(n) {
   state.currentMission = n;
   window.scrollTo({ top: 0, behavior: 'smooth' });
   updateMissionTabs();
+  updateTopBar();
 }
 
 // Shortcut dari top bar: langsung ke misi tanpa lock
