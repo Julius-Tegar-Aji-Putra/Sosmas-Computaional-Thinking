@@ -3,12 +3,1007 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MISI LOGIKA</title>
-
-  <script>
-    window.location.replace("materi.html");
-  </script>
+  <title>Programmer Cilik Adventure — Belajar Berpikir Seperti Komputer</title>
+  <meta name="description" content="Website edukatif interaktif untuk siswa SD kelas 4–6. Belajar logika, pola, algoritma, dan debugging melalui petualangan seru bersama robot Logi!">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- ====================================================================
+     TOP BAR (persistent)
+     ==================================================================== -->
+<div id="top-bar">
+  <div class="brand-logo">🤖 PROGRAMMER CILIK</div>
+  <div class="progress-steps" id="progress-steps">
+    <div class="prog-step active" id="ps-materi" onclick="showScreen('materi')" style="cursor:pointer;" title="Kembali ke Materi">📖 Materi</div>
+    <div class="prog-divider"></div>
+    <div class="prog-step locked" id="ps-m1" onclick="if(!this.classList.contains('locked')) { showScreen('missions'); gotoMission(1); }" style="cursor:pointer;" title="Misi 1">🔍 M1: Pola</div>
+    <div class="prog-divider"></div>
+    <div class="prog-step locked" id="ps-m2" onclick="if(!this.classList.contains('locked')) { showScreen('missions'); gotoMission(2); }" style="cursor:pointer;" title="Misi 2">🪜 M2: Langkah</div>
+    <div class="prog-divider"></div>
+    <div class="prog-step locked" id="ps-m3" onclick="if(!this.classList.contains('locked')) { showScreen('missions'); gotoMission(3); }" style="cursor:pointer;" title="Misi 3">🤖 M3: Labirin</div>
+  </div>
+  <div class="score-chip">⭐ <span id="score-display">0</span></div>
+</div>
+
+<div id="app">
+
+<!-- ====================================================================
+     SCREEN: WELCOME
+     ==================================================================== -->
+<section id="screen-welcome" class="screen active">
+  <div class="card welcome-card">
+
+    <div class="welcome-tags">
+      <span class="stamp stamp-yellow">SD Kelas 4–6</span>
+      <span class="stamp stamp-blue">10–15 Menit</span>
+      <span class="stamp stamp-orange">3 Misi</span>
+    </div>
+
+    <div class="welcome-title-wrap">
+      <span class="title-main">PROGRAMMER CILIK<br>ADVENTURE</span>
+      <span class="title-sub">"Belajar Berpikir Seperti Komputer"</span>
+    </div>
+
+    <!-- Mascot Logi -->
+    <div class="mascot-center">
+      <div class="speech-bubble">
+        "Halo! Aku <strong>Logi</strong> 🤖<br>
+        Hari ini kamu akan menjadi <strong>Programmer Cilik</strong>!<br>
+        Bantu aku menyelesaikan 3 misi ya!"
+      </div>
+      <div id="logi-welcome">
+        <!-- SVG Logi -->
+        <svg viewBox="0 0 160 200" width="150" height="150" aria-label="Maskot Logi robot">
+          <!-- Antenna -->
+          <line x1="80" y1="35" x2="80" y2="15" stroke="#202124" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="80" cy="12" r="7" fill="#FFC83D" stroke="#202124" stroke-width="3"/>
+          <!-- Ears -->
+          <rect x="22" y="55" width="12" height="24" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+          <rect x="126" y="55" width="12" height="24" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+          <!-- Head -->
+          <rect x="32" y="32" width="96" height="70" rx="8" fill="#FFF9EA" stroke="#202124" stroke-width="4"/>
+          <!-- Face screen -->
+          <rect x="42" y="44" width="76" height="46" rx="6" fill="#202124"/>
+          <!-- Eyes -->
+          <circle cx="62" cy="64" r="9" fill="#FFC83D"/>
+          <circle cx="98" cy="64" r="9" fill="#FFC83D"/>
+          <circle cx="65" cy="61" r="3.5" fill="#FFF9EA"/>
+          <circle cx="101" cy="61" r="3.5" fill="#FFF9EA"/>
+          <!-- Smile (happy) -->
+          <path id="logi-mouth" d="M 68 76 Q 80 86 92 76" stroke="#4FAE68" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <!-- Body -->
+          <rect x="44" y="106" width="72" height="52" rx="6" fill="#3A7BD5" stroke="#202124" stroke-width="4"/>
+          <!-- Chest buttons -->
+          <circle cx="64" cy="126" r="7" fill="#F15A4A" stroke="#202124" stroke-width="2"/>
+          <circle cx="80" cy="126" r="7" fill="#FFC83D" stroke="#202124" stroke-width="2"/>
+          <circle cx="96" cy="126" r="7" fill="#4FAE68" stroke="#202124" stroke-width="2"/>
+          <!-- Screen line on body -->
+          <rect x="52" y="138" width="56" height="10" rx="3" fill="#2860aa"/>
+          <!-- Arms -->
+          <path d="M 44 115 Q 24 130 28 148" stroke="#202124" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M 116 115 Q 136 130 132 148" stroke="#202124" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- Hands (small circles) -->
+          <circle cx="27" cy="150" r="6" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+          <circle cx="133" cy="150" r="6" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+          <!-- Legs -->
+          <rect x="55" y="158" width="16" height="22" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+          <rect x="89" y="158" width="16" height="22" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+          <!-- Feet -->
+          <rect x="50" y="177" width="24" height="10" rx="4" fill="#202124"/>
+          <rect x="86" y="177" width="24" height="10" rx="4" fill="#202124"/>
+        </svg>
+      </div>
+    </div>
+
+    <button id="btn-start" class="btn btn-yellow btn-hero btn-center">
+      🚀 MULAI PETUALANGAN →
+    </button>
+
+    <!-- Mission preview -->
+    <div class="mission-preview">
+      <div class="mission-preview-item">
+        <div class="mission-badge-circle" style="background:#FFF9EA;border-color:#202124;">🔒</div>
+        <span>M1: Pola</span>
+      </div>
+      <div class="mission-preview-item">
+        <div class="mission-badge-circle" style="background:#FFF9EA;border-color:#202124;">🔒</div>
+        <span>M2: Langkah</span>
+      </div>
+      <div class="mission-preview-item">
+        <div class="mission-badge-circle" style="background:#FFF9EA;border-color:#202124;">🔒</div>
+        <span>M3: Labirin</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ====================================================================
+     SCREEN: MATERI (4 scenes)
+     ==================================================================== -->
+<section id="screen-materi" class="screen">
+
+  <!-- ── SCENE 1: HELLO, PROBLEM SOLVER ── -->
+  <div id="scene-1" class="scene active card accent-yellow">
+
+    <div class="scene-header">
+      <div class="scene-num-col">
+        <span class="scene-number">01</span>
+      </div>
+      <div class="scene-title-col">
+        <span class="stamp stamp-yellow">PEMBUKAAN</span>
+        <h2>HALO, PROBLEM SOLVER!</h2>
+      </div>
+    </div>
+
+    <div class="mascot-row">
+      <div class="logi-wrap">
+        <svg viewBox="0 0 100 120" width="70" height="70" aria-hidden="true">
+          <rect x="20" y="20" width="60" height="45" rx="6" fill="#FFF9EA" stroke="#202124" stroke-width="3"/>
+          <rect x="27" y="28" width="46" height="30" rx="4" fill="#202124"/>
+          <circle cx="40" cy="40" r="6" fill="#FFC83D"/>
+          <circle cx="60" cy="40" r="6" fill="#FFC83D"/>
+          <circle cx="42" cy="38" r="2.5" fill="#FFF9EA"/>
+          <circle cx="62" cy="38" r="2.5" fill="#FFF9EA"/>
+          <path d="M 42 50 Q 50 56 58 50" stroke="#4FAE68" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <rect x="28" y="68" width="44" height="32" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+          <circle cx="40" cy="80" r="4" fill="#F15A4A" stroke="#202124" stroke-width="1.5"/>
+          <circle cx="50" cy="80" r="4" fill="#FFC83D" stroke="#202124" stroke-width="1.5"/>
+          <circle cx="60" cy="80" r="4" fill="#4FAE68" stroke="#202124" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="speech-bubble">
+        Setiap hari kamu memecahkan banyak masalah!<br>
+        Mulai dari <strong>memilih pakaian</strong> sampai <strong>mencari jalan ke sekolah</strong>.<br>
+        Komputer pun butuh cara berpikir yang teratur!
+      </div>
+    </div>
+
+    <!-- Comparison diagram: Manusia vs Komputer -->
+    <div class="compare-grid" style="margin: var(--sp-md) 0;">
+      <div class="compare-col" style="border-top:4px solid var(--accent-yellow);">
+        <h4>😊 Manusia</h4>
+        <div class="diagram-row" style="flex-direction:column; align-items:flex-start;">
+          <div class="diagram-step">👁️ Lihat masalah</div>
+          <div class="diagram-arrow">↓</div>
+          <div class="diagram-step">🧠 Berpikir</div>
+          <div class="diagram-arrow">↓</div>
+          <div class="diagram-step">🚀 Bertindak</div>
+        </div>
+      </div>
+      <div class="compare-col" style="border-top:4px solid var(--accent-blue);">
+        <h4>🤖 Komputer</h4>
+        <div class="diagram-row" style="flex-direction:column; align-items:flex-start;">
+          <div class="diagram-step">📥 Terima input</div>
+          <div class="diagram-arrow">↓</div>
+          <div class="diagram-step">⚙️ Proses</div>
+          <div class="diagram-arrow">↓</div>
+          <div class="diagram-step">📤 Output hasil</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example cards (hover to reveal) -->
+    <p style="font-weight:700; margin-bottom:var(--sp-sm);">Contoh masalah sehari-hari:</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-sm); margin-bottom:var(--sp-lg);">
+      <div class="problem-card" data-solution="Bawa payung atau jas hujan! ☂️">
+        <div style="font-size:2rem;">🌧️</div>
+        <div style="font-size:0.88rem;">Hujan tiba-tiba</div>
+        <div class="problem-solution hidden" style="font-size:0.82rem; color:var(--accent-blue); margin-top:4px;"></div>
+      </div>
+      <div class="problem-card" data-solution="Makan besar atau beli jajan! 🍱">
+        <div style="font-size:2rem;">🤤</div>
+        <div style="font-size:0.88rem;">Perut lapar</div>
+        <div class="problem-solution hidden" style="font-size:0.82rem; color:var(--accent-blue); margin-top:4px;"></div>
+      </div>
+      <div class="problem-card" data-solution="Cari jalan lain atau tunggu! 🗺️">
+        <div style="font-size:2rem;">🚧</div>
+        <div style="font-size:0.88rem;">Jalan macet</div>
+        <div class="problem-solution hidden" style="font-size:0.82rem; color:var(--accent-blue); margin-top:4px;"></div>
+      </div>
+    </div>
+
+    <p style="font-size:0.85rem; color:#666; text-align:center; margin-bottom:var(--sp-lg);">
+      💡 Klik kartu masalah di atas untuk lihat solusinya!
+    </p>
+
+    <div class="nav-row">
+      <div></div>
+      <button class="btn btn-yellow" onclick="gotoScene(2)">APA ITU LOGIKA? →</button>
+    </div>
+  </div>
+
+  <!-- ── SCENE 2: BERPIKIR LOGIS ── -->
+  <div id="scene-2" class="scene card accent-blue">
+
+    <div class="scene-header">
+      <div class="scene-num-col"><span class="scene-number">02</span></div>
+      <div class="scene-title-col">
+        <span class="stamp stamp-blue">LOGIKA</span>
+        <h2>APA ITU BERPIKIR LOGIS?</h2>
+      </div>
+    </div>
+
+    <div class="scenario-box accent-blue-left">
+      <p style="font-size:1.1rem;">
+        🌧️ Kamu mau ke sekolah. Di luar <strong style="color:var(--accent-blue);">HUJAN DERAS!</strong><br>
+        Apa yang paling masuk akal kamu pilih?
+      </p>
+    </div>
+
+    <div class="choice-grid" id="logic-choices">
+      <button class="choice-card" data-answer="correct" data-id="lc1">
+        <span class="choice-emoji">☂️</span>
+        <span>PAYUNG</span>
+      </button>
+      <button class="choice-card" data-answer="wrong" data-id="lc2">
+        <span class="choice-emoji">🕶️</span>
+        <span>KACAMATA HITAM</span>
+      </button>
+      <button class="choice-card" data-answer="wrong" data-id="lc3">
+        <span class="choice-emoji">🍦</span>
+        <span>ES KRIM</span>
+      </button>
+    </div>
+
+    <div id="logic-feedback" class="feedback-box hidden">
+      <div id="logic-fb-icon" class="fb-icon"></div>
+      <div class="fb-body">
+        <h4 id="logic-fb-title"></h4>
+        <p id="logic-fb-desc"></p>
+      </div>
+    </div>
+
+    <div class="scenario-box" style="margin-top:var(--sp-md);" id="logic-explanation">
+      <p style="font-weight:700; margin-bottom:var(--sp-sm);">💡 Berpikir Logis artinya…</p>
+      <p style="font-size:1rem;">Menggunakan <span class="hl-yellow">informasi</span> dan <span class="hl-yellow">alasan</span> untuk menentukan tindakan yang paling masuk akal.</p>
+      <div class="diagram-row" style="margin-top:var(--sp-sm);">
+        <div class="diagram-step">👁️ Amati</div>
+        <div class="diagram-arrow">➔</div>
+        <div class="diagram-step">🧠 Pikir</div>
+        <div class="diagram-arrow">➔</div>
+        <div class="diagram-step">🎯 Pilih</div>
+        <div class="diagram-arrow">➔</div>
+        <div class="diagram-step">🚀 Coba</div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="gotoScene(1)">← KEMBALI</button>
+      <button class="btn btn-blue" id="btn-scene2-next" onclick="gotoScene(3)" disabled>CARA MEMECAHKAN MASALAH →</button>
+    </div>
+  </div>
+
+  <!-- ── SCENE 3: CARA MEMECAHKAN MASALAH (5 sub-tabs) ── -->
+  <div id="scene-3" class="scene card" style="padding-top:var(--sp-md);">
+
+    <div style="margin-bottom:var(--sp-md);">
+      <span class="stamp stamp-ink">CARA MEMECAHKAN MASALAH</span>
+    </div>
+
+    <div class="subtabs" id="concept-tabs">
+      <button class="tab-btn active" data-tab="3a">🧩 1. Pecah</button>
+      <button class="tab-btn" data-tab="3b">🔍 2. Pola</button>
+      <button class="tab-btn" data-tab="3c">🎯 3. Pilih</button>
+      <button class="tab-btn" data-tab="3d">🪜 4. Langkah</button>
+      <button class="tab-btn" data-tab="3e">🐛 5. Bug</button>
+    </div>
+
+    <!-- 3A: DECOMPOSITION -->
+    <div id="sub-3a" class="subpane active" style="border-top:4px solid var(--accent-blue); padding-top:var(--sp-md);">
+      <div class="scene-header">
+        <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">A</span></div>
+        <div class="scene-title-col">
+          <span class="stamp stamp-blue">DECOMPOSITION</span>
+          <h2>PECAH JADI KECIL!</h2>
+        </div>
+      </div>
+
+      <div class="mascot-row">
+        <div class="logi-wrap">
+          <svg viewBox="0 0 80 80" width="55" height="55" aria-hidden="true">
+            <rect x="10" y="10" width="60" height="40" rx="6" fill="#FFF9EA" stroke="#202124" stroke-width="2.5"/>
+            <rect x="17" y="16" width="46" height="27" rx="4" fill="#202124"/>
+            <circle cx="32" cy="28" r="5" fill="#FFC83D"/>
+            <circle cx="48" cy="28" r="5" fill="#FFC83D"/>
+            <circle cx="33.5" cy="26.5" r="2" fill="#FFF9EA"/>
+            <circle cx="49.5" cy="26.5" r="2" fill="#FFF9EA"/>
+            <path d="M 35 36 Q 40 41 45 36" stroke="#4FAE68" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <rect x="20" y="52" width="40" height="22" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="speech-bubble">
+          "Kalau masalahnya terasa besar dan membingungkan, jangan panik! <strong>Pecah dulu</strong> jadi bagian-bagian kecil agar lebih mudah."
+        </div>
+      </div>
+
+      <div class="instruction-note">
+        📌 Klik kotak di bawah untuk memecah tugas menjadi bagian-bagian kecil!
+      </div>
+
+      <div class="tree-area">
+        <button class="tree-root" id="btn-tree-reveal" onclick="revealTree()">
+          🎒 PERSIAPAN SEKOLAH (Klik Aku!)
+        </button>
+        <div id="tree-connector-1" class="tree-connector hidden"></div>
+        <div id="tree-level-1" class="tree-branches hidden">
+          <div class="tree-branch" id="tb1">
+            <div style="font-size:1.5rem;">👔</div>
+            <div>Pakaian</div>
+            <div id="tb1-sub" class="tree-sub-grid hidden">
+              <div class="tree-sub-branch">Seragam</div>
+              <div class="tree-sub-branch">Sepatu</div>
+              <div class="tree-sub-branch">Kaos kaki</div>
+            </div>
+          </div>
+          <div class="tree-branch" id="tb2">
+            <div style="font-size:1.5rem;">📚</div>
+            <div>Buku & Alat</div>
+            <div id="tb2-sub" class="tree-sub-grid hidden">
+              <div class="tree-sub-branch">Buku tulis</div>
+              <div class="tree-sub-branch">Pensil</div>
+              <div class="tree-sub-branch">Penghapus</div>
+            </div>
+          </div>
+          <div class="tree-branch" id="tb3">
+            <div style="font-size:1.5rem;">🥪</div>
+            <div>Bekal</div>
+            <div id="tb3-sub" class="tree-sub-grid hidden">
+              <div class="tree-sub-branch">Makanan</div>
+              <div class="tree-sub-branch">Minuman</div>
+              <div class="tree-sub-branch">Uang saku</div>
+            </div>
+          </div>
+        </div>
+        <div id="tree-expand-hint" class="hidden" style="margin-top:var(--sp-sm); font-size:0.88rem; color:#666;">
+          💡 Klik tiap kotak untuk melihat lebih detail!
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <strong>💡 Decomposition</strong> = Memecah masalah besar menjadi bagian-bagian kecil yang lebih mudah diselesaikan satu per satu.
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-ghost" onclick="gotoScene(2)">← LOGIKA</button>
+        <button class="btn btn-blue" onclick="switchTab('3b')">2. CARI POLA →</button>
+      </div>
+    </div>
+
+    <!-- 3B: PATTERN RECOGNITION -->
+    <div id="sub-3b" class="subpane" style="border-top:4px solid var(--accent-yellow); padding-top:var(--sp-md);">
+      <div class="scene-header">
+        <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">B</span></div>
+        <div class="scene-title-col">
+          <span class="stamp stamp-yellow">PATTERN RECOGNITION</span>
+          <h2>CARI POLA!</h2>
+        </div>
+      </div>
+
+      <div class="mascot-row">
+        <div class="logi-wrap">
+          <svg viewBox="0 0 80 80" width="55" height="55" aria-hidden="true">
+            <rect x="10" y="10" width="60" height="40" rx="6" fill="#FFF9EA" stroke="#202124" stroke-width="2.5"/>
+            <rect x="17" y="16" width="46" height="27" rx="4" fill="#202124"/>
+            <circle cx="32" cy="28" r="5" fill="#FFC83D"/>
+            <circle cx="48" cy="28" r="5" fill="#FFC83D"/>
+            <path d="M 34 36 Q 40 41 46 36" stroke="#4FAE68" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <rect x="20" y="52" width="40" height="22" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="speech-bubble">
+          "Banyak hal di sekitar kita punya <strong>pola tersembunyi</strong>. Bisakah kamu menemukannya?"
+        </div>
+      </div>
+
+      <!-- Pattern Quiz -->
+      <div id="pattern-quiz-area">
+        <div class="instruction-note">📌 Lihat polanya, lalu pilih gambar/angka berikutnya!</div>
+
+        <div id="pattern-q1" class="pattern-question-block">
+          <div style="font-weight:700; margin-bottom:var(--sp-xs);">Soal 1 dari 2 <span style="font-size:0.8rem; color:#888;">— Pola simbol</span></div>
+          <div class="pattern-track" id="pt-track-1">
+            <div class="pattern-item">🐱</div>
+            <div class="pattern-item">🐶</div>
+            <div class="pattern-item">🐱</div>
+            <div class="pattern-item">🐶</div>
+            <div class="pattern-item">🐱</div>
+            <div class="pattern-question" id="pt-ans-1">?</div>
+          </div>
+          <div class="choice-grid choice-grid-4" id="pt-choices-1">
+            <button class="choice-card" data-correct="true" data-qid="1">
+              <span class="choice-emoji">🐶</span><span>Anjing</span>
+            </button>
+            <button class="choice-card" data-correct="false" data-qid="1">
+              <span class="choice-emoji">🐱</span><span>Kucing</span>
+            </button>
+            <button class="choice-card" data-correct="false" data-qid="1">
+              <span class="choice-emoji">🐸</span><span>Katak</span>
+            </button>
+            <button class="choice-card" data-correct="false" data-qid="1">
+              <span class="choice-emoji">🐦</span><span>Burung</span>
+            </button>
+          </div>
+          <div id="pt-fb-1" class="feedback-box hidden"></div>
+        </div>
+
+        <div id="pattern-q2" class="pattern-question-block hidden" style="margin-top:var(--sp-md);">
+          <div style="font-weight:700; margin-bottom:var(--sp-xs);">Soal 2 dari 2 <span style="font-size:0.8rem; color:#888;">— Pola angka</span></div>
+          <div class="pattern-track" id="pt-track-2">
+            <div class="pattern-item is-number">2</div>
+            <div class="pattern-item is-number">4</div>
+            <div class="pattern-item is-number">6</div>
+            <div class="pattern-item is-number">8</div>
+            <div class="pattern-question" id="pt-ans-2">?</div>
+          </div>
+          <div class="choice-grid choice-grid-4" id="pt-choices-2">
+            <button class="choice-card" data-correct="false" data-qid="2">
+              <span class="choice-emoji" style="font-size:1.2rem;">9</span>
+            </button>
+            <button class="choice-card" data-correct="true" data-qid="2">
+              <span class="choice-emoji" style="font-size:1.2rem;">10</span>
+            </button>
+            <button class="choice-card" data-correct="false" data-qid="2">
+              <span class="choice-emoji" style="font-size:1.2rem;">11</span>
+            </button>
+            <button class="choice-card" data-correct="false" data-qid="2">
+              <span class="choice-emoji" style="font-size:1.2rem;">12</span>
+            </button>
+          </div>
+          <div id="pt-fb-2" class="feedback-box hidden"></div>
+        </div>
+      </div>
+
+      <div class="takeaway" style="margin-top:var(--sp-md);">
+        <strong>💡 Pattern Recognition</strong> = Kemampuan menemukan sesuatu yang berulang atau memiliki kesamaan. Komputer juga pakai ini untuk mengenali wajah, suara, dan tulisan!
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-ghost" onclick="switchTab('3a')">← PECAH</button>
+        <button class="btn btn-yellow" onclick="switchTab('3c')">3. PILIH YANG PENTING →</button>
+      </div>
+    </div>
+
+    <!-- 3C: ABSTRACTION -->
+    <div id="sub-3c" class="subpane" style="border-top:4px solid var(--accent-orange); padding-top:var(--sp-md);">
+      <div class="scene-header">
+        <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">C</span></div>
+        <div class="scene-title-col">
+          <span class="stamp stamp-orange">ABSTRACTION</span>
+          <h2>PILIH YANG PENTING!</h2>
+        </div>
+      </div>
+
+      <div class="mascot-row">
+        <div class="logi-wrap">
+          <svg viewBox="0 0 80 80" width="55" height="55" aria-hidden="true">
+            <rect x="10" y="10" width="60" height="40" rx="6" fill="#FFF9EA" stroke="#202124" stroke-width="2.5"/>
+            <rect x="17" y="16" width="46" height="27" rx="4" fill="#202124"/>
+            <circle cx="32" cy="28" r="5" fill="#FFC83D"/>
+            <circle cx="48" cy="28" r="5" fill="#FFC83D"/>
+            <path d="M 34 36 Q 40 41 46 36" stroke="#4FAE68" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <rect x="20" y="52" width="40" height="22" rx="4" fill="#F28C38" stroke="#202124" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="speech-bubble">
+          "Tidak semua informasi kita butuhkan! <strong>Fokus saja</strong> pada yang paling penting untuk menyelesaikan masalah."
+        </div>
+      </div>
+
+      <div class="scenario-box" style="margin-bottom:var(--sp-md);">
+        <strong>Misi:</strong> Cari jalan dari 🏠 Rumah ke 🏫 Sekolah.<br>
+        <small style="color:#666;">Pilih <strong>2–3 hal yang PALING PENTING</strong> untuk kamu perhatikan:</small>
+      </div>
+
+      <div class="abs-grid" id="abs-items">
+        <button class="abs-item" data-id="home" data-important="true">
+          <span style="font-size:1.8rem;">🏠</span><span>Rumah (titik awal)</span>
+        </button>
+        <button class="abs-item" data-id="cat" data-important="false">
+          <span style="font-size:1.8rem;">🐱</span><span>Kucing Tidur</span>
+        </button>
+        <button class="abs-item" data-id="school" data-important="true">
+          <span style="font-size:1.8rem;">🏫</span><span>Sekolah (tujuan)</span>
+        </button>
+        <button class="abs-item" data-id="cloud" data-important="false">
+          <span style="font-size:1.8rem;">☁️</span><span>Awan di langit</span>
+        </button>
+        <button class="abs-item" data-id="road" data-important="true">
+          <span style="font-size:1.8rem;">🛣️</span><span>Jalan Utama</span>
+        </button>
+        <button class="abs-item" data-id="bird" data-important="false">
+          <span style="font-size:1.8rem;">🐦</span><span>Burung di pohon</span>
+        </button>
+      </div>
+
+      <div style="text-align:center; margin-top:var(--sp-sm);">
+        <button class="btn btn-orange btn-sm" id="btn-check-abs" onclick="checkAbstraction()">✓ CEK PILIHAN</button>
+      </div>
+
+      <div id="abs-feedback" class="feedback-box hidden"></div>
+
+      <div class="takeaway" style="margin-top:var(--sp-md);">
+        <strong>💡 Abstraction</strong> = Memilih dan fokus hanya pada informasi yang <em>penting</em>, mengabaikan yang tidak perlu. Ini membantu kita berpikir lebih efisien!
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-ghost" onclick="switchTab('3b')">← POLA</button>
+        <button class="btn btn-orange" onclick="switchTab('3d')">4. SUSUN LANGKAH →</button>
+      </div>
+    </div>
+
+    <!-- 3D: ALGORITHM -->
+    <div id="sub-3d" class="subpane" style="border-top:4px solid var(--accent-green); padding-top:var(--sp-md);">
+      <div class="scene-header">
+        <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">D</span></div>
+        <div class="scene-title-col">
+          <span class="stamp stamp-green">ALGORITHM</span>
+          <h2>SUSUN LANGKAH!</h2>
+        </div>
+      </div>
+
+      <div class="mascot-row">
+        <div class="logi-wrap">
+          <svg viewBox="0 0 80 80" width="55" height="55" aria-hidden="true">
+            <rect x="10" y="10" width="60" height="40" rx="6" fill="#FFF9EA" stroke="#202124" stroke-width="2.5"/>
+            <rect x="17" y="16" width="46" height="27" rx="4" fill="#202124"/>
+            <circle cx="32" cy="28" r="5" fill="#FFC83D"/>
+            <circle cx="48" cy="28" r="5" fill="#FFC83D"/>
+            <path d="M 34 36 Q 40 41 46 36" stroke="#4FAE68" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <rect x="20" y="52" width="40" height="22" rx="4" fill="#4FAE68" stroke="#202124" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="speech-bubble">
+          "Robot tidak bisa berpikir sendiri. Robot <strong>hanya mengikuti langkah demi langkah</strong>. Kalau urutannya salah — robot ERROR!"
+        </div>
+      </div>
+
+      <div class="instruction-note">
+        📌 Gunakan tombol ⬆ ⬇ untuk mengurutkan langkah membuat Susu Cokelat 🍫 dari awal hingga selesai!
+      </div>
+
+      <div class="reorder-list" id="algo-reorder"></div>
+
+      <div style="text-align:center; margin-top:var(--sp-md);">
+        <button class="btn btn-green btn-sm" onclick="checkAlgorithm()">✓ CEK URUTAN</button>
+        <button class="btn btn-ghost btn-sm" style="margin-left:var(--sp-sm);" onclick="resetAlgorithm()">↺ ACAK LAGI</button>
+      </div>
+
+      <div id="algo-feedback" class="feedback-box hidden"></div>
+
+      <div class="takeaway" style="margin-top:var(--sp-md);">
+        <strong>💡 Algorithm</strong> = Urutan langkah logis yang disusun untuk menyelesaikan masalah. Komputer hanya bisa bekerja jika instruksinya benar dan berurutan!
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-ghost" onclick="switchTab('3c')">← PILIH</button>
+        <button class="btn btn-green" onclick="switchTab('3e')">5. CARI BUG →</button>
+      </div>
+    </div>
+
+    <!-- 3E: DEBUGGING -->
+    <div id="sub-3e" class="subpane" style="border-top:4px solid var(--accent-red); padding-top:var(--sp-md);">
+      <div class="scene-header">
+        <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">E</span></div>
+        <div class="scene-title-col">
+          <span class="stamp stamp-red">DEBUGGING</span>
+          <h2>CARI &amp; PERBAIKI BUG!</h2>
+        </div>
+      </div>
+
+      <div class="mascot-row">
+        <div class="logi-wrap">
+          <svg viewBox="0 0 80 80" width="55" height="55" aria-hidden="true">
+            <rect x="10" y="10" width="60" height="40" rx="6" fill="#FFF9EA" stroke="#202124" stroke-width="2.5"/>
+            <rect x="17" y="16" width="46" height="27" rx="4" fill="#202124"/>
+            <circle cx="32" cy="28" r="5" fill="#FFC83D"/>
+            <circle cx="48" cy="28" r="5" fill="#FFC83D"/>
+            <!-- Sad mouth -->
+            <path d="M 35 38 Q 40 33 45 38" stroke="#F15A4A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <rect x="20" y="52" width="40" height="22" rx="4" fill="#F15A4A" stroke="#202124" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="speech-bubble">
+          "Ada yang tidak beres! <strong>Bisakah kamu menemukan langkah yang aneh/salah?</strong> Klik langkahnya!"
+        </div>
+      </div>
+
+      <!-- Phase 1: Find the bug -->
+      <div id="debug-phase-1">
+        <div class="instruction-note">📌 Klik langkah yang SALAH / tidak logis di urutan membuat susu cokelat ini:</div>
+
+        <div class="reorder-list" id="debug-scrambled">
+          <div class="reorder-item is-bug" data-bug="true" onclick="foundBug(this)">
+            <div class="reorder-num">01</div>
+            <div class="reorder-emoji">☕</div>
+            <div class="reorder-text">Minum susu cokelatnya</div>
+            <div style="font-size:0.8rem; color:#F15A4A; margin-left:auto; font-weight:700;">Klik jika salah!</div>
+          </div>
+          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
+            <div class="reorder-num">02</div>
+            <div class="reorder-emoji">🥛</div>
+            <div class="reorder-text">Tuang susu ke gelas</div>
+          </div>
+          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
+            <div class="reorder-num">03</div>
+            <div class="reorder-emoji">🍫</div>
+            <div class="reorder-text">Masukkan bubuk cokelat</div>
+          </div>
+          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
+            <div class="reorder-num">04</div>
+            <div class="reorder-emoji">🥄</div>
+            <div class="reorder-text">Aduk hingga rata</div>
+          </div>
+          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
+            <div class="reorder-num">05</div>
+            <div class="reorder-emoji">🫙</div>
+            <div class="reorder-text">Siapkan gelas bersih</div>
+          </div>
+        </div>
+
+        <div id="debug-p1-fb" class="feedback-box hidden"></div>
+      </div>
+
+      <!-- Phase 2: Fix the order -->
+      <div id="debug-phase-2" class="hidden">
+        <div class="instruction-note" style="border-color:var(--accent-green);">
+          🐛 Bug ditemukan! Sekarang <strong>urutkan yang benar</strong> menggunakan ⬆ ⬇:
+        </div>
+        <div class="reorder-list" id="debug-reorder"></div>
+        <div style="text-align:center; margin-top:var(--sp-md);">
+          <button class="btn btn-green btn-sm" onclick="checkDebug()">✓ CEK PERBAIKAN</button>
+        </div>
+        <div id="debug-p2-fb" class="feedback-box hidden"></div>
+      </div>
+
+      <div class="takeaway" style="margin-top:var(--sp-md);">
+        <strong>💡 Debugging</strong> = Proses menemukan kesalahan (<em>bug</em>) dalam urutan atau instruksi, lalu memperbaikinya agar berjalan dengan benar.
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-ghost" onclick="switchTab('3d')">← LANGKAH</button>
+        <button class="btn btn-red" id="btn-goto-scene4" onclick="gotoScene(4)" disabled>LIHAT RINGKASAN →</button>
+      </div>
+    </div>
+
+  </div><!-- /scene-3 -->
+
+  <!-- ── SCENE 4: READY FOR MISSION ── -->
+  <div id="scene-4" class="scene card accent-green">
+
+    <div style="text-align:center; margin-bottom:var(--sp-md);">
+      <span class="stamp stamp-green">SELESAI BELAJAR!</span>
+      <h2 class="display-lg" style="margin-top:var(--sp-sm);">SEKARANG KAMU TAHU…</h2>
+    </div>
+
+    <div class="summary-tiles">
+      <div class="summary-tile">
+        <span class="tile-icon">🧩</span>
+        <h4>Pecah Masalah</h4>
+        <p>Decomposition</p>
+      </div>
+      <div class="summary-tile">
+        <span class="tile-icon">🔍</span>
+        <h4>Cari Pola</h4>
+        <p>Pattern Recognition</p>
+      </div>
+      <div class="summary-tile">
+        <span class="tile-icon">🎯</span>
+        <h4>Pilih Penting</h4>
+        <p>Abstraction</p>
+      </div>
+      <div class="summary-tile">
+        <span class="tile-icon">🪜</span>
+        <h4>Susun Langkah</h4>
+        <p>Algorithm</p>
+      </div>
+      <div class="summary-tile">
+        <span class="tile-icon">🐛</span>
+        <h4>Perbaiki Bug</h4>
+        <p>Debugging</p>
+      </div>
+    </div>
+
+    <div style="background:var(--bg-paper); border:var(--border); border-radius:var(--radius-lg); padding:var(--sp-md); display:flex; gap:var(--sp-md); align-items:center; margin-bottom:var(--sp-lg);">
+      <span style="font-size:2.5rem; flex-shrink:0;">🤖</span>
+      <p style="font-size:1.05rem;">"Kamu sudah siap menyelesaikan <strong>3 misi seru</strong>! Ayo buktikan kemampuanmu sebagai <strong>Programmer Cilik</strong>!"</p>
+    </div>
+
+    <div style="text-align:center;">
+      <button class="btn btn-yellow btn-hero btn-center" onclick="gotoMissions()">
+        🎮 MULAI 3 MISI →
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ====================================================================
+     SCREEN: MISSIONS
+     ==================================================================== -->
+<section id="screen-missions" class="screen">
+
+  <!-- Mission tabs indicator -->
+  <div class="card" style="padding:var(--sp-sm) var(--sp-md); display:flex; gap:var(--sp-sm); align-items:center; margin-bottom:var(--sp-md); flex-wrap:wrap;">
+    <div class="mission-tab-indicator active" id="mtab-1">🔍 M1: POLA</div>
+    <div style="color:#aaa; font-size:0.8rem;">———</div>
+    <div class="mission-tab-indicator locked" id="mtab-2">🪜 M2: LANGKAH</div>
+    <div style="color:#aaa; font-size:0.8rem;">———</div>
+    <div class="mission-tab-indicator locked" id="mtab-3">🤖 M3: LABIRIN</div>
+  </div>
+
+  <!-- ── MISSION 1: DETEKTIF POLA ── -->
+  <div id="mission-1" class="mission-pane active">
+
+    <div class="mission-header-card">
+      <span class="stamp stamp-yellow">MISI 01</span>
+      <h2>🔍 DETEKTIF POLA</h2>
+      <p>"Logi menemukan kode rahasia! Bantu temukan pola dan pilih yang berikutnya!"</p>
+      <div class="level-dots">
+        <div class="level-dot active" id="m1-dot-1">1</div>
+        <div class="level-dot" id="m1-dot-2">2</div>
+        <div class="level-dot" id="m1-dot-3">3</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-md);">
+        <span class="stamp stamp-ink" id="m1-level-label">Level 1 dari 3</span>
+        <span style="font-size:0.88rem; color:#666;" id="m1-hint">Temukan pola berulang!</span>
+      </div>
+
+      <div class="pattern-track" id="m1-track"></div>
+
+      <div style="font-weight:700; margin-top:var(--sp-md); margin-bottom:var(--sp-sm); font-size:0.9rem;">Pilih jawabanmu:</div>
+      <div class="choice-grid choice-grid-4" id="m1-choices"></div>
+
+      <div id="m1-feedback" class="feedback-box hidden"></div>
+    </div>
+  </div>
+
+  <!-- ── MISSION 2: SUSUN LANGKAH ── -->
+  <div id="mission-2" class="mission-pane">
+
+    <div class="mission-header-card">
+      <span class="stamp stamp-blue">MISI 02</span>
+      <h2>🪜 SUSUN LANGKAH</h2>
+      <p>"Urutkan langkah-langkah agar robot bisa menyelesaikan tugasnya dengan benar!"</p>
+      <div class="level-dots">
+        <div class="level-dot active" id="m2-dot-1">1</div>
+        <div class="level-dot" id="m2-dot-2">2</div>
+        <div class="level-dot" id="m2-dot-3">3</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-md);">
+        <span class="stamp stamp-ink" id="m2-level-label">Level 1 dari 3</span>
+        <span style="font-size:0.88rem; color:#666;" id="m2-task-name"></span>
+      </div>
+
+      <div class="instruction-note">📌 Gunakan ⬆ ⬇ untuk mengatur urutan yang benar dari atas ke bawah!</div>
+
+      <div class="reorder-list" id="m2-reorder"></div>
+
+      <div style="text-align:center; margin-top:var(--sp-md);">
+        <button class="btn btn-blue" onclick="checkM2()">✓ CEK URUTAN</button>
+      </div>
+
+      <div id="m2-feedback" class="feedback-box hidden"></div>
+    </div>
+  </div>
+
+  <!-- ── MISSION 3: LABIRIN ROBOT ── -->
+  <div id="mission-3" class="mission-pane">
+
+    <div class="mission-header-card">
+      <span class="stamp stamp-orange">MISI 03</span>
+      <h2>🤖 LABIRIN ROBOT</h2>
+      <p>"Logi tidak bisa berpikir sendiri! Perintahkan langkah demi langkah untuk sampai ke tujuan! 🏠"</p>
+      <div class="level-dots">
+        <div class="level-dot active" id="m3-dot-1">1</div>
+        <div class="level-dot" id="m3-dot-2">2</div>
+        <div class="level-dot" id="m3-dot-3">3</div>
+      </div>
+    </div>
+
+    <div class="mission3-layout">
+      <!-- Maze board -->
+      <div class="card" style="padding:var(--sp-md);">
+        <div style="display:flex; justify-content:space-between; margin-bottom:var(--sp-sm);">
+          <span class="stamp stamp-ink" id="m3-level-label">Level 1 dari 3</span>
+          <span style="font-size:0.85rem;">Tujuan: 🏠</span>
+        </div>
+        <div class="maze-board" id="maze-board" style="grid-template-columns: repeat(4, 1fr);"></div>
+        <div id="m3-maze-fb" class="feedback-box hidden" style="margin-top:var(--sp-sm);"></div>
+      </div>
+
+      <!-- Control panel -->
+      <div class="control-panel">
+        <div class="card" style="padding:var(--sp-md);">
+          <h3 style="font-family:var(--font-display); font-size:1rem; margin-bottom:var(--sp-md);">🎮 PANEL PERINTAH</h3>
+          <div class="dpad">
+            <div></div>
+            <button class="dpad-btn" id="dpad-up" onclick="addCmd('U')" title="Atas">⬆️</button>
+            <div></div>
+            <button class="dpad-btn" id="dpad-left" onclick="addCmd('L')" title="Kiri">⬅️</button>
+            <div class="dpad-btn dpad-center" title="D-Pad">🤖</div>
+            <button class="dpad-btn" id="dpad-right" onclick="addCmd('R')" title="Kanan">➡️</button>
+            <div></div>
+            <button class="dpad-btn" id="dpad-down" onclick="addCmd('D')" title="Bawah">⬇️</button>
+            <div></div>
+          </div>
+
+          <div style="margin-top:var(--sp-md);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-xs);">
+              <span style="font-family:var(--font-display); font-size:0.9rem;">PERINTAH (<span id="cmd-count">0</span>/10):</span>
+              <button class="btn btn-ghost btn-sm" onclick="removeLastCmd()">⌫ Hapus</button>
+            </div>
+            <div class="cmd-queue-box" id="cmd-queue">
+              <span class="cmd-placeholder">Belum ada perintah...</span>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:var(--sp-sm); margin-top:var(--sp-md);">
+            <button class="btn btn-yellow" onclick="runRobot()" style="flex:1;">🚀 JALANKAN!</button>
+            <button class="btn btn-ghost btn-sm" onclick="resetMaze()">↺</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ====================================================================
+     SCREEN: FINALE
+     ==================================================================== -->
+<section id="screen-finale" class="screen">
+
+  <div class="card accent-green" style="text-align:center; padding:var(--sp-xl) var(--sp-lg);">
+    <span class="stamp stamp-green" style="font-size:1rem; margin-bottom:var(--sp-md); display:inline-block;">🏆 SELAMAT!</span>
+    <h1 class="display-xl" style="margin-bottom:var(--sp-sm);">KAMU BERHASIL MENJADI</h1>
+    <div style="font-family:var(--font-display); font-size:2.8rem; background:var(--accent-yellow); display:inline-block; padding:8px 32px; border:var(--border-thick); border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); margin-bottom:var(--sp-lg);">
+      PROGRAMMER CILIK 🤖⭐
+    </div>
+
+    <!-- Logi celebration -->
+    <div style="margin:var(--sp-md) 0;">
+      <svg viewBox="0 0 160 200" width="120" height="120" aria-label="Logi senang">
+        <line x1="80" y1="35" x2="80" y2="15" stroke="#202124" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="80" cy="12" r="7" fill="#FFC83D" stroke="#202124" stroke-width="3"/>
+        <rect x="22" y="55" width="12" height="24" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+        <rect x="126" y="55" width="12" height="24" rx="4" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+        <rect x="32" y="32" width="96" height="70" rx="8" fill="#FFF9EA" stroke="#202124" stroke-width="4"/>
+        <rect x="42" y="44" width="76" height="46" rx="6" fill="#202124"/>
+        <circle cx="62" cy="64" r="9" fill="#FFC83D"/>
+        <circle cx="98" cy="64" r="9" fill="#FFC83D"/>
+        <!-- Big happy eyes -->
+        <path d="M 55 58 Q 62 52 69 58" stroke="#FFF9EA" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 91 58 Q 98 52 105 58" stroke="#FFF9EA" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 65 76 Q 80 90 95 76" stroke="#4FAE68" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+        <rect x="44" y="106" width="72" height="52" rx="6" fill="#4FAE68" stroke="#202124" stroke-width="4"/>
+        <circle cx="64" cy="126" r="7" fill="#FFC83D" stroke="#202124" stroke-width="2"/>
+        <circle cx="80" cy="126" r="7" fill="#fff" stroke="#202124" stroke-width="2"/>
+        <circle cx="96" cy="126" r="7" fill="#FFC83D" stroke="#202124" stroke-width="2"/>
+        <!-- Arms raised -->
+        <path d="M 44 110 Q 15 95 10 75" stroke="#202124" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M 116 110 Q 145 95 150 75" stroke="#202124" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="10" cy="73" r="7" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+        <circle cx="150" cy="73" r="7" fill="#3A7BD5" stroke="#202124" stroke-width="3"/>
+      </svg>
+    </div>
+
+    <p style="font-size:1.05rem; margin-bottom:var(--sp-lg);">"Hebat! Hari ini kamu sudah belajar hal-hal yang dipakai oleh programmer sungguhan!"</p>
+  </div>
+
+  <!-- Score summary -->
+  <div class="card" style="margin-bottom:var(--sp-md);">
+    <h3 style="font-family:var(--font-display); margin-bottom:var(--sp-md);">📊 HASIL MISIMU</h3>
+    <div class="finale-score-row">
+      <div class="score-big-box">
+        <div class="score-big-num" id="finale-score">0</div>
+        <div class="score-big-label">TOTAL SKOR</div>
+      </div>
+      <div style="flex:1;">
+        <div style="display:flex; flex-direction:column; gap:var(--sp-sm);">
+          <div style="display:flex; align-items:center; gap:var(--sp-sm);">
+            <span class="stamp stamp-yellow" style="width:90px; text-align:center;">M1: POLA</span>
+            <div style="flex:1; height:14px; background:var(--bg-paper); border:var(--border-thin); border-radius:4px; overflow:hidden;">
+              <div id="bar-m1" style="height:100%; background:var(--accent-yellow); transition:width 0.8s ease; width:0%;"></div>
+            </div>
+            <span id="lbl-m1" style="font-family:var(--font-display); font-size:0.9rem;">0/30</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--sp-sm);">
+            <span class="stamp stamp-blue" style="width:90px; text-align:center;">M2: LANGKAH</span>
+            <div style="flex:1; height:14px; background:var(--bg-paper); border:var(--border-thin); border-radius:4px; overflow:hidden;">
+              <div id="bar-m2" style="height:100%; background:var(--accent-blue); transition:width 0.8s ease; width:0%;"></div>
+            </div>
+            <span id="lbl-m2" style="font-family:var(--font-display); font-size:0.9rem;">0/30</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--sp-sm);">
+            <span class="stamp stamp-orange" style="width:90px; text-align:center;">M3: LABIRIN</span>
+            <div style="flex:1; height:14px; background:var(--bg-paper); border:var(--border-thin); border-radius:4px; overflow:hidden;">
+              <div id="bar-m3" style="height:100%; background:var(--accent-orange); transition:width 0.8s ease; width:0%;"></div>
+            </div>
+            <span id="lbl-m3" style="font-family:var(--font-display); font-size:0.9rem;">0/40</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificate -->
+  <div class="certificate card" id="sertifikat">
+    <div style="margin-bottom:var(--sp-md);">
+      <span class="stamp stamp-green">SERTIFIKAT DIGITAL</span>
+    </div>
+    <h2 class="certificate-title">PROGRAMMER CILIK ADVENTURE</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:var(--sp-sm);">Dengan bangga diberikan kepada kelompok:</p>
+    <div class="certificate-name" id="cert-name">Nama Kelompok</div>
+    <p style="font-size:0.9rem; margin:var(--sp-sm) 0;">Telah berhasil menyelesaikan semua misi dan mempelajari:</p>
+    <ul class="cert-checklist">
+      <li><span class="cert-check">✓</span> Berpikir Logis</li>
+      <li><span class="cert-check">✓</span> Pattern Recognition — Menemukan Pola</li>
+      <li><span class="cert-check">✓</span> Decomposition — Memecah Masalah</li>
+      <li><span class="cert-check">✓</span> Abstraction — Memilih Informasi Penting</li>
+      <li><span class="cert-check">✓</span> Algorithm — Menyusun Langkah</li>
+      <li><span class="cert-check">✓</span> Debugging — Menemukan &amp; Memperbaiki Bug</li>
+    </ul>
+    <div class="cert-date" id="cert-date"></div>
+  </div>
+
+  <!-- Name input + actions -->
+  <div class="name-input-row no-print">
+    <input type="text" class="name-input" id="name-input" placeholder="Tulis nama kelompokmu..." maxlength="40">
+    <button class="btn btn-yellow" onclick="setName()">✓ SET NAMA</button>
+  </div>
+
+  <div style="display:flex; gap:var(--sp-sm); justify-content:center; flex-wrap:wrap; margin-bottom:var(--sp-xl);" class="no-print">
+    <button class="btn btn-ink" onclick="window.print()">🖨️ CETAK SERTIFIKAT</button>
+    <button class="btn btn-blue" onclick="showScreen('materi')">📖 KEMBALI KE MATERI</button>
+    <button class="btn btn-ghost" onclick="restartAll()">🔄 MAIN LAGI</button>
+  </div>
+
+</section>
+
+</div><!-- /app -->
+
+<!-- Confetti container -->
+<div class="confetti-container" id="confetti-container"></div>
+
+<!-- Toast notifications -->
+<div id="toast-container"></div>
+
+<!-- Inline styles for mission tab indicators -->
+<style>
+.mission-tab-indicator {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  background: var(--bg-paper);
+  color: #888;
+}
+.mission-tab-indicator.active { background: var(--accent-yellow); color: var(--text-ink); box-shadow: var(--shadow-md); }
+.mission-tab-indicator.done   { background: var(--accent-green);  color: #fff; }
+.mission-tab-indicator.locked { opacity: 0.45; }
+
+.problem-card {
+  background: var(--card-bg);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px var(--sp-sm);
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.problem-card:hover { transform: translate(-2px,-2px); box-shadow: var(--shadow-md); }
+.problem-card.revealed { background: var(--bg-paper); border-color: var(--accent-green); }
+</style>
+
+<script src="script.js"></script>
 </body>
 </html>
