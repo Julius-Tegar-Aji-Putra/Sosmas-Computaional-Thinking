@@ -29,16 +29,19 @@ const state = {
 
   // Mission 1 — Detektif Pola
   m1Level:     1,
+  m1MaxLevel:  1,
   m1Score:     0,
   m1Answered:  false,
 
   // Mission 2 — Susun Langkah
   m2Level:  1,
+  m2MaxLevel: 1,
   m2Score:  0,
   m2Items:  [],
 
   // Mission 3 — Labirin Robot
   m3Level:  1,
+  m3MaxLevel: 1,
   m3Score:  0,
   m3Grid:   [],
   m3Cols:   4,
@@ -605,6 +608,13 @@ function initMission1() {
   renderM1Level();
 }
 
+function jumpM1Level(n) {
+  if (n <= state.m1MaxLevel && n !== state.m1Level) {
+    state.m1Level = n;
+    renderM1Level();
+  }
+}
+
 function renderM1Level() {
   const lvl = m1Levels[state.m1Level - 1];
   state.m1Answered = false;
@@ -619,9 +629,19 @@ function renderM1Level() {
   for (let i = 1; i <= 3; i++) {
     const dot = document.getElementById(`m1-dot-${i}`);
     if (!dot) continue;
+    
+    // Can only click if it's unlocked (<= m1MaxLevel)
+    if (i <= state.m1MaxLevel) {
+      dot.style.cursor = 'pointer';
+      dot.onclick = () => jumpM1Level(i);
+    } else {
+      dot.style.cursor = 'not-allowed';
+      dot.onclick = null;
+    }
+
     dot.classList.remove('active','done');
-    if (i < state.m1Level) dot.classList.add('done');
-    else if (i === state.m1Level) dot.classList.add('active');
+    if (i === state.m1Level) dot.classList.add('active');
+    else if (i <= state.m1MaxLevel) dot.classList.add('done');
   }
 
   // Track
@@ -685,6 +705,7 @@ function handleM1Choice(btn, correct, lvl) {
     setTimeout(() => {
       if (state.m1Level < 3) {
         state.m1Level++;
+        if (state.m1Level > state.m1MaxLevel) state.m1MaxLevel = state.m1Level;
         renderM1Level();
       } else {
         // Mission 1 complete
@@ -778,6 +799,13 @@ function initMission2() {
   renderM2Level();
 }
 
+function jumpM2Level(n) {
+  if (n <= state.m2MaxLevel && n !== state.m2Level) {
+    state.m2Level = n;
+    renderM2Level();
+  }
+}
+
 function renderM2Level() {
   const lvl = m2Levels[state.m2Level - 1];
   state.m2Items = shuffle(lvl.steps);
@@ -792,9 +820,18 @@ function renderM2Level() {
   for (let i = 1; i <= 3; i++) {
     const dot = document.getElementById(`m2-dot-${i}`);
     if (!dot) continue;
+    
+    if (i <= state.m2MaxLevel) {
+      dot.style.cursor = 'pointer';
+      dot.onclick = () => jumpM2Level(i);
+    } else {
+      dot.style.cursor = 'not-allowed';
+      dot.onclick = null;
+    }
+
     dot.classList.remove('active','done');
-    if (i < state.m2Level) dot.classList.add('done');
-    else if (i === state.m2Level) dot.classList.add('active');
+    if (i === state.m2Level) dot.classList.add('active');
+    else if (i <= state.m2MaxLevel) dot.classList.add('done');
   }
 
   renderReorderList('m2-reorder', state.m2Items, 'm2');
@@ -820,6 +857,7 @@ function checkM2() {
     setTimeout(() => {
       if (state.m2Level < 3) {
         state.m2Level++;
+        if (state.m2Level > state.m2MaxLevel) state.m2MaxLevel = state.m2Level;
         renderM2Level();
       } else {
         completeMission2();
@@ -913,6 +951,13 @@ function initMission3() {
   renderM3Level();
 }
 
+function jumpM3Level(n) {
+  if (n <= state.m3MaxLevel && n !== state.m3Level) {
+    state.m3Level = n;
+    renderM3Level();
+  }
+}
+
 function renderM3Level() {
   const lvl = m3Levels[state.m3Level - 1];
   state.m3Grid  = lvl.grid.map(row => [...row]);
@@ -936,9 +981,18 @@ function renderM3Level() {
   for (let i = 1; i <= 3; i++) {
     const dot = document.getElementById(`m3-dot-${i}`);
     if (!dot) continue;
+    
+    if (i <= state.m3MaxLevel) {
+      dot.style.cursor = 'pointer';
+      dot.onclick = () => jumpM3Level(i);
+    } else {
+      dot.style.cursor = 'not-allowed';
+      dot.onclick = null;
+    }
+
     dot.classList.remove('active','done');
-    if (i < state.m3Level) dot.classList.add('done');
-    else if (i === state.m3Level) dot.classList.add('active');
+    if (i === state.m3Level) dot.classList.add('active');
+    else if (i <= state.m3MaxLevel) dot.classList.add('done');
   }
 
   // Render board
@@ -1091,6 +1145,7 @@ async function runRobot() {
       setTimeout(() => {
         if (state.m3Level < 3) {
           state.m3Level++;
+          if (state.m3Level > state.m3MaxLevel) state.m3MaxLevel = state.m3Level;
           renderM3Level();
         } else {
           completeMission3();
@@ -1178,9 +1233,9 @@ function restartAll() {
     logicAnswered: false,
     patternQ1Done: false, patternQ2Done: false,
     algoItems: [], absSelected: [],
-    m1Level:1, m1Score:0, m1Answered:false,
-    m2Level:1, m2Score:0, m2Items:[],
-    m3Level:1, m3Score:0, m3Grid:[], m3Cmds:[], m3Running:false,
+    m1Level:1, m1MaxLevel:1, m1Score:0, m1Answered:false,
+    m2Level:1, m2MaxLevel:1, m2Score:0, m2Items:[],
+    m3Level:1, m3MaxLevel:1, m3Score:0, m3Grid:[], m3Cmds:[], m3Running:false,
     totalScore:0,
     m1Done:false, m2Done:false, m3Done:false,
   });
