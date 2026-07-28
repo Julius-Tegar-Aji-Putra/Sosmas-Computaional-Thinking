@@ -204,22 +204,11 @@ document.addEventListener('DOMContentLoaded', () => {
     btnStart.addEventListener('click', () => {
       showScreen('materi');
       initScene2();
-      initAlgorithmReorder();
     });
   }
 
-  // Problem cards (scene 1) — reveal on click
-  document.querySelectorAll('.problem-card').forEach(card => {
-    card.addEventListener('click', function() {
-      const sol = this.dataset.solution;
-      const solEl = this.querySelector('.problem-solution');
-      if (solEl) {
-        solEl.classList.toggle('hidden');
-        solEl.textContent = sol;
-        this.classList.toggle('revealed');
-      }
-    });
-  });
+  // (Removed old problem-card logic)
+
 
   // Logic choice buttons (scene 2)
   document.querySelectorAll('#logic-choices .choice-card').forEach(btn => {
@@ -453,14 +442,6 @@ function checkAbstraction() {
 /* ─────────────────────────────────────────────────────────────
    8. SCENE 3D — ALGORITHM (Reorder)
    ───────────────────────────────────────────────────────────── */
-const algoData = [
-  { text: 'Siapkan gelas bersih', emoji: '🫙', order: 1 },
-  { text: 'Masukkan bubuk cokelat', emoji: '🍫', order: 2 },
-  { text: 'Tuang susu ke gelas', emoji: '🥛', order: 3 },
-  { text: 'Aduk hingga merata', emoji: '🥄', order: 4 },
-  { text: 'Siap diminum! 😋', emoji: '☕', order: 5 },
-];
-
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -468,20 +449,6 @@ function shuffle(arr) {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
-}
-
-function initAlgorithmReorder() {
-  state.algoItems = shuffle(algoData);
-  renderReorderList('algo-reorder', state.algoItems, 'algo');
-  const fb = document.getElementById('algo-feedback');
-  if (fb) fb.classList.add('hidden');
-}
-
-function resetAlgorithm() {
-  state.algoItems = shuffle(algoData);
-  renderReorderList('algo-reorder', state.algoItems, 'algo');
-  const fb = document.getElementById('algo-feedback');
-  if (fb) { fb.classList.add('hidden'); fb.classList.remove('correct','wrong'); }
 }
 
 function renderReorderList(containerId, items, prefix) {
@@ -560,73 +527,6 @@ function renderReorderList(containerId, items, prefix) {
       }, { passive: true });
     });
 
-  } else {
-    // ── Arrow-button mode for algo in Materi ──
-    items.forEach((item, idx) => {
-      const div = document.createElement('div');
-      div.className = 'reorder-item';
-      div.innerHTML = `
-        <div class="arrow-btns">
-          <button class="arrow-btn" onclick="moveItem('${prefix}',${idx},-1)" ${idx===0?'disabled':''}
-            aria-label="Naik">⬆</button>
-          <button class="arrow-btn" onclick="moveItem('${prefix}',${idx},1)" ${idx===items.length-1?'disabled':''}
-            aria-label="Turun">⬇</button>
-        </div>
-        <div class="reorder-num">${idx+1}</div>
-        <div class="reorder-emoji">${item.emoji}</div>
-        <div class="reorder-text">${item.text}</div>
-      `;
-      container.appendChild(div);
-    });
-  }
-}
-
-function moveItem(prefix, idx, dir) {
-  let items, containerId;
-  if (prefix === 'algo') {
-    items = state.algoItems;
-    containerId = 'algo-reorder';
-  } else if (prefix === 'm2') {
-    items = state.m2Items;
-    containerId = 'm2-reorder';
-  } else {
-    return;
-  }
-
-  const newIdx = idx + dir;
-  if (newIdx < 0 || newIdx >= items.length) return;
-  [items[idx], items[newIdx]] = [items[newIdx], items[idx]];
-  renderReorderList(containerId, items, prefix);
-
-  // Clear feedback on move
-  const fbMap = { algo: 'algo-feedback', m2: 'm2-feedback' };
-  const fb = document.getElementById(fbMap[prefix]);
-  if (fb) { fb.classList.add('hidden'); fb.classList.remove('correct','wrong'); }
-}
-
-function checkAlgorithm() {
-  const correct = state.algoItems.every((item, idx) => item.order === idx + 1);
-  const fbEl = document.getElementById('algo-feedback');
-  const nextBtn = document.getElementById('btn-goto-scene4');
-
-  if (correct) {
-    // Highlight all green
-    document.querySelectorAll('#algo-reorder .reorder-item').forEach(el => {
-      el.classList.add('is-right');
-    });
-    setFeedback(fbEl, true, 'SEMPURNA! Algoritmamu benar! 🎉',
-      'Urutan langkah yang kamu buat tadi disebut ALGORITMA — langkah-langkah untuk menyelesaikan masalah!');
-    addScore(5);
-    showToast('Algoritma berhasil! 🪜', 'correct');
-  } else {
-    // Highlight wrong positions
-    document.querySelectorAll('#algo-reorder .reorder-item').forEach((el, idx) => {
-      el.classList.remove('is-right','is-wrong');
-      el.classList.add(state.algoItems[idx].order === idx + 1 ? 'is-right' : 'is-wrong');
-    });
-    setFeedback(fbEl, false, 'Belum urut! ✗',
-      'Perhatikan langkah merah — posisinya belum tepat. Gunakan ⬆ ⬇ untuk mengatur ulang!');
-    showToast('Urutan belum benar, coba lagi! 🪜', 'wrong');
   }
 }
 
@@ -840,35 +740,32 @@ function unlockAndGoM2() {
    ───────────────────────────────────────────────────────────── */
 const m2Levels = [
   {
-    name: 'Membuat Teh ☕',
+    name: 'Memakai Sepatu 👟',
     steps: [
-      { text: 'Siapkan cangkir bersih',   emoji: '🫙', order: 1 },
-      { text: 'Didihkan air panas',        emoji: '🔥', order: 2 },
-      { text: 'Masukkan kantong teh',      emoji: '🍵', order: 3 },
-      { text: 'Tuang air panas',           emoji: '💧', order: 4 },
-      { text: 'Tambah gula secukupnya',    emoji: '🍬', order: 5 },
-      { text: 'Aduk dan siap diminum!',    emoji: '🥄', order: 6 },
+      { text: 'Siapkan sepatu dan kaus kaki',     emoji: '👟', order: 1 },
+      { text: 'Pakai kaus kaki di kedua kaki',    emoji: '🧦', order: 2 },
+      { text: 'Masukkan kaki ke dalam sepatu',    emoji: '👞', order: 3 },
+      { text: 'Ikat tali sepatu hingga kencang',  emoji: '🪢', order: 4 },
     ]
   },
   {
-    name: 'Mencuci Tangan 🙌',
+    name: 'Mencuci Tangan 🧼',
     steps: [
-      { text: 'Basahi tangan dengan air', emoji: '💧', order: 1 },
-      { text: 'Tuang sabun cuci tangan',  emoji: '🧴', order: 2 },
-      { text: 'Gosok seluruh tangan',     emoji: '🤲', order: 3 },
-      { text: 'Bilas dengan air mengalir',emoji: '🚿', order: 4 },
-      { text: 'Keringkan dengan handuk',  emoji: '🏳️', order: 5 },
+      { text: 'Basahi tangan dengan air',         emoji: '💧', order: 1 },
+      { text: 'Tuang sabun cuci tangan',          emoji: '🧼', order: 2 },
+      { text: 'Gosok seluruh bagian tangan',      emoji: '🤲', order: 3 },
+      { text: 'Bilas dengan air mengalir',        emoji: '🚿', order: 4 },
+      { text: 'Keringkan dengan handuk',          emoji: '🏳️', order: 5 },
     ]
   },
   {
-    name: 'Menanam Bunga 🌸',
+    name: 'Makan Mi Instan Cup 🍜',
     steps: [
-      { text: 'Siapkan pot dan tanah',      emoji: '🪴', order: 1 },
-      { text: 'Isi pot dengan tanah',       emoji: '🌱', order: 2 },
-      { text: 'Buat lubang di tengah',      emoji: '🕳️', order: 3 },
-      { text: 'Tanam benih/bibit bunga',   emoji: '🌸', order: 4 },
-      { text: 'Tutup dengan tanah',         emoji: '🏔️', order: 5 },
-      { text: 'Siram secukupnya',           emoji: '🚿', order: 6 },
+      { text: 'Buka penutup cup setengah bagian', emoji: '🍜', order: 1 },
+      { text: 'Masukkan semua bumbu ke dalam cup',emoji: '🧂', order: 2 },
+      { text: 'Tuang air panas sampai batas garis',emoji: '🫖', order: 3 },
+      { text: 'Tutup kembali dan diamkan selama 3 menit', emoji: '⏳', order: 4 },
+      { text: 'Buka tutupnya, aduk rata, dan siap dimakan',emoji: '🥢', order: 5 },
     ]
   },
 ];
@@ -1261,7 +1158,6 @@ function restartAll() {
   showScreen('welcome');
   // Re-init scenes
   initScene2();
-  initAlgorithmReorder();
   // Reset pattern quiz
   const q2 = document.getElementById('pattern-q2');
   if (q2) q2.classList.add('hidden');

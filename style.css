@@ -1009,11 +1009,65 @@ a {
 }
 
 /* -------------------------------------------------------------------------
+   FLIP CARD (Problem Cards - Scene 1)
+   ------------------------------------------------------------------------- */
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  height: 220px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner,
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-md);
+  border: var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.flip-card-front {
+  background-color: var(--card-bg);
+  color: var(--text-main);
+}
+
+.flip-card-back {
+  background-color: #EAF2FF;
+  border-color: var(--accent-blue);
+  color: var(--text-main);
+  transform: rotateY(180deg);
+}
+
+/* -------------------------------------------------------------------------
    19. SUMMARY TILES (Finale / Recap)
    ------------------------------------------------------------------------- */
 .summary-tiles {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--sp-sm);
   margin: var(--sp-lg) 0;
 }
