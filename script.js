@@ -401,7 +401,7 @@ function toggleAbsItem(btn) {
 }
 
 function checkAbstraction() {
-  const important = ['home','school','road'];
+  const important = ['gelas','piring','sendokgarpu'];
   const selected  = state.absSelected;
 
   if (selected.length < 3) {
@@ -423,7 +423,7 @@ function checkAbstraction() {
       }
     });
     setFeedback(fbEl, true, 'HEBAT! Kamu memilih yang penting! 🎯',
-      'Rumah, Sekolah, dan Jalan Utama adalah informasi yang relevan. Kucing, Awan, dan Burung bisa diabaikan!');
+      'Gelas, Piring, dan Sendok & Garpu adalah barang penting untuk makan. Kucing, Awan, dan Burung tidak ada hubungannya!');
     addScore(5);
     showToast('Abstraction! Fokus pada yang penting! 🎯', 'correct');
   } else {
@@ -536,17 +536,17 @@ function renderReorderList(containerId, items, prefix) {
    ───────────────────────────────────────────────────────────── */
 const m1Levels = [
   {
-    sequence: ['🐱','🐶','🐱','🐶','🐱'],
+    sequence: ['🐰','🐻','🐰','🐻','🐰'],
     question: '?',
     choices: [
-      { text:'🐶 Anjing', correct: true },
-      { text:'🐱 Kucing', correct: false },
-      { text:'🐸 Katak',  correct: false },
-      { text:'🦊 Rubah',  correct: false },
+      { text:'🐻 Beruang', correct: true },
+      { text:'🐰 Kelinci', correct: false },
+      { text:'🐵 Monyet',  correct: false },
+      { text:'🐼 Panda',  correct: false },
     ],
     hint: 'Perhatikan pola selang-seling!',
     type: 'emoji',
-    explanation: 'Polanya: Kucing → Anjing → Kucing → Anjing → Kucing → Anjing! Selang-seling!'
+    explanation: 'Polanya: Kelinci → Beruang → Kelinci → Beruang → Kelinci → Beruang! Selang-seling!'
   },
   {
     sequence: ['🔵','🟢','🟡','🔵','🟢'],
