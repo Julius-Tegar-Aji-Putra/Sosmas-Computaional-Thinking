@@ -1339,6 +1339,7 @@ a {
   font-family: var(--font-display);
   font-size: 0.88rem;
   font-weight: 600;
+  width: 90px;
 }
 .mission-badge-circle {
   width: 44px;
@@ -1350,6 +1351,8 @@ a {
   justify-content: center;
   font-size: 1.2rem;
   box-shadow: var(--shadow-sm);
+  line-height: 1;
+  padding-bottom: 3px;
 }
 
 /* -------------------------------------------------------------------------
