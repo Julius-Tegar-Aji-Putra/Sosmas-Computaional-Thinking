@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Programmer Cilik Adventure — Belajar Berpikir Seperti Komputer</title>
-  <meta name="description" content="Website edukatif interaktif untuk siswa SD kelas 4–6. Belajar logika, pola, algoritma, dan debugging melalui petualangan seru bersama robot Logi!">
+  <meta name="description" content="Website edukatif interaktif untuk siswa SD kelas 5. Belajar logika, pola, algoritma, dan debugging melalui petualangan seru bersama robot Logi!">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,11 +17,11 @@
   <div class="progress-steps" id="progress-steps">
     <div class="prog-step active" id="ps-materi" onclick="showScreen('materi')" style="cursor:pointer;" title="Kembali ke Materi">📖 Materi</div>
     <div class="prog-divider"></div>
-    <div class="prog-step locked" id="ps-m1" onclick="if(!this.classList.contains('locked')) { showScreen('missions'); gotoMission(1); }" style="cursor:pointer;" title="Misi 1">🔍 M1: Pola</div>
+    <div class="prog-step locked" id="ps-m1" onclick="goToMissionShortcut(1)" style="cursor:pointer;" title="Misi 1">🔍 M1: Pola</div>
     <div class="prog-divider"></div>
-    <div class="prog-step locked" id="ps-m2" onclick="if(!this.classList.contains('locked')) { showScreen('missions'); gotoMission(2); }" style="cursor:pointer;" title="Misi 2">🪜 M2: Langkah</div>
+    <div class="prog-step locked" id="ps-m2" onclick="goToMissionShortcut(2)" style="cursor:pointer;" title="Misi 2">🪜 M2: Langkah</div>
     <div class="prog-divider"></div>
-    <div class="prog-step locked" id="ps-m3" onclick="if(!this.classList.contains('locked')) { showScreen('missions'); gotoMission(3); }" style="cursor:pointer;" title="Misi 3">🤖 M3: Labirin</div>
+    <div class="prog-step locked" id="ps-m3" onclick="goToMissionShortcut(3)" style="cursor:pointer;" title="Misi 3">🤖 M3: Labirin</div>
   </div>
   <div class="score-chip">⭐ <span id="score-display">0</span></div>
 </div>
@@ -35,8 +35,8 @@
   <div class="card welcome-card">
 
     <div class="welcome-tags">
-      <span class="stamp stamp-yellow">SD Kelas 4–6</span>
-      <span class="stamp stamp-blue">10–15 Menit</span>
+      <span class="stamp stamp-yellow">SD Kelas 5</span>
+      <!-- <span class="stamp stamp-blue">10–15 Menit</span> -->
       <span class="stamp stamp-orange">3 Misi</span>
     </div>
 
@@ -164,22 +164,22 @@
     <div class="compare-grid" style="margin: var(--sp-md) 0;">
       <div class="compare-col" style="border-top:4px solid var(--accent-yellow);">
         <h4>😊 Manusia</h4>
-        <div class="diagram-row" style="flex-direction:column; align-items:flex-start;">
-          <div class="diagram-step">👁️ Lihat masalah</div>
-          <div class="diagram-arrow">↓</div>
-          <div class="diagram-step">🧠 Berpikir</div>
-          <div class="diagram-arrow">↓</div>
-          <div class="diagram-step">🚀 Bertindak</div>
+        <div class="diagram-row" style="flex-direction:column; align-items:stretch; text-align:center;">
+          <div class="diagram-step" style="justify-content:center; padding:16px; font-size:1.1rem; border:2px solid var(--text-ink); border-radius:var(--radius-md);">👀 Lihat masalah</div>
+          <div class="diagram-arrow" style="align-self:center;">⬇</div>
+          <div class="diagram-step" style="justify-content:center; padding:16px; font-size:1.1rem; border:2px solid var(--text-ink); border-radius:var(--radius-md);">🧠 Berpikir</div>
+          <div class="diagram-arrow" style="align-self:center;">⬇</div>
+          <div class="diagram-step" style="justify-content:center; padding:16px; font-size:1.1rem; border:2px solid var(--text-ink); border-radius:var(--radius-md);">🚀 Bertindak</div>
         </div>
       </div>
       <div class="compare-col" style="border-top:4px solid var(--accent-blue);">
         <h4>🤖 Komputer</h4>
-        <div class="diagram-row" style="flex-direction:column; align-items:flex-start;">
-          <div class="diagram-step">📥 Terima input</div>
-          <div class="diagram-arrow">↓</div>
-          <div class="diagram-step">⚙️ Proses</div>
-          <div class="diagram-arrow">↓</div>
-          <div class="diagram-step">📤 Output hasil</div>
+        <div class="diagram-row" style="flex-direction:column; align-items:stretch; text-align:center;">
+          <div class="diagram-step" style="justify-content:center; padding:16px; font-size:1.1rem; border:2px solid var(--text-ink); border-radius:var(--radius-md);">📥 Terima input</div>
+          <div class="diagram-arrow" style="align-self:center;">⬇</div>
+          <div class="diagram-step" style="justify-content:center; padding:16px; font-size:1.1rem; border:2px solid var(--text-ink); border-radius:var(--radius-md);">⚙️ Proses</div>
+          <div class="diagram-arrow" style="align-self:center;">⬇</div>
+          <div class="diagram-step" style="justify-content:center; padding:16px; font-size:1.1rem; border:2px solid var(--text-ink); border-radius:var(--radius-md);">📤 Output hasil</div>
         </div>
       </div>
     </div>
@@ -187,25 +187,56 @@
     <!-- Example cards (hover to reveal) -->
     <p style="font-weight:700; margin-bottom:var(--sp-sm);">Contoh masalah sehari-hari:</p>
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-sm); margin-bottom:var(--sp-lg);">
-      <div class="problem-card" data-solution="Bawa payung atau jas hujan! ☂️">
-        <div style="font-size:2rem;">🌧️</div>
-        <div style="font-size:0.88rem;">Hujan tiba-tiba</div>
-        <div class="problem-solution hidden" style="font-size:0.82rem; color:var(--accent-blue); margin-top:4px;"></div>
+      
+      <!-- Card 1 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="./assets/hujan.png" alt="Hujan tiba-tiba" style="width:100%; height:140px; object-fit:contain; border-radius:var(--radius-sm); margin-bottom:8px;">
+            <div style="font-size:0.88rem; font-weight:700;">Hujan tiba-tiba</div>
+          </div>
+          <div class="flip-card-back">
+            <img src="./assets/solusi_hujan.png" alt="Solusi Hujan" style="width:100%; height:120px; object-fit:contain; border-radius:var(--radius-sm); margin-bottom:4px;">
+            <div style="font-size:0.85rem; font-weight:700; color:var(--accent-blue);">Solusi:</div>
+            <div style="font-size:0.8rem; font-weight:600;">Bawa payung atau jas hujan! ☂️</div>
+          </div>
+        </div>
       </div>
-      <div class="problem-card" data-solution="Makan besar atau beli jajan! 🍱">
-        <div style="font-size:2rem;">🤤</div>
-        <div style="font-size:0.88rem;">Perut lapar</div>
-        <div class="problem-solution hidden" style="font-size:0.82rem; color:var(--accent-blue); margin-top:4px;"></div>
+
+      <!-- Card 2 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="./assets/lapar.png" alt="Perut lapar" style="width:100%; height:140px; object-fit:contain; border-radius:var(--radius-sm); margin-bottom:8px;">
+            <div style="font-size:0.88rem; font-weight:700;">Perut lapar</div>
+          </div>
+          <div class="flip-card-back">
+            <img src="./assets/solusi_lapar.png" alt="Solusi Lapar" style="width:100%; height:120px; object-fit:contain; border-radius:var(--radius-sm); margin-bottom:4px;">
+            <div style="font-size:0.85rem; font-weight:700; color:var(--accent-blue);">Solusi:</div>
+            <div style="font-size:0.8rem; font-weight:600;">Makan besar atau beli jajan! 🍱</div>
+          </div>
+        </div>
       </div>
-      <div class="problem-card" data-solution="Cari jalan lain atau tunggu! 🗺️">
-        <div style="font-size:2rem;">🚧</div>
-        <div style="font-size:0.88rem;">Jalan macet</div>
-        <div class="problem-solution hidden" style="font-size:0.82rem; color:var(--accent-blue); margin-top:4px;"></div>
+
+      <!-- Card 3 -->
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="./assets/sampah.png" alt="Sampah berserakan" style="width:100%; height:140px; object-fit:contain; border-radius:var(--radius-sm); margin-bottom:8px;">
+            <div style="font-size:0.88rem; font-weight:700;">Sampah berserakan</div>
+          </div>
+          <div class="flip-card-back">
+            <img src="./assets/solusi_sampah.png" alt="Solusi Sampah" style="width:100%; height:120px; object-fit:contain; border-radius:var(--radius-sm); margin-bottom:4px;">
+            <div style="font-size:0.85rem; font-weight:700; color:var(--accent-blue);">Solusi:</div>
+            <div style="font-size:0.8rem; font-weight:600;">Rapikan dan buang sampah ke tempatnya! 🗑️</div>
+          </div>
+        </div>
       </div>
+
     </div>
 
     <p style="font-size:0.85rem; color:#666; text-align:center; margin-bottom:var(--sp-lg);">
-      💡 Klik kartu masalah di atas untuk lihat solusinya!
+      💡 Arahkan kursor atau klik kartu masalah di atas untuk membaliknya dan melihat solusinya!
     </p>
 
     <div class="nav-row">
@@ -225,24 +256,25 @@
       </div>
     </div>
 
-    <div class="scenario-box accent-blue-left">
-      <p style="font-size:1.1rem;">
-        🌧️ Kamu mau ke sekolah. Di luar <strong style="color:var(--accent-blue);">HUJAN DERAS!</strong><br>
+    <div class="scenario-box accent-blue-left" style="display: flex; align-items: center; gap: 20px;">
+      <img src="./assets/skenario_hujan.png" alt="Skenario Hujan" style="width: 90px; height: 90px; object-fit: contain; border-radius: var(--radius-sm); flex-shrink: 0;">
+      <p style="font-size:1.1rem; margin: 0;">
+        Kamu mau ke sekolah. Di luar <strong style="color:var(--accent-blue);">HUJAN DERAS!</strong><br>
         Apa yang paling masuk akal kamu pilih?
       </p>
     </div>
 
     <div class="choice-grid" id="logic-choices">
       <button class="choice-card" data-answer="correct" data-id="lc1">
-        <span class="choice-emoji">☂️</span>
+        <img src="./assets/logika_payung.png" alt="Payung" style="width:100px; height:100px; object-fit:contain; margin-bottom:var(--sp-xs);">
         <span>PAYUNG</span>
       </button>
       <button class="choice-card" data-answer="wrong" data-id="lc2">
-        <span class="choice-emoji">🕶️</span>
+        <img src="./assets/logika_kacamata.png" alt="Kacamata Hitam" style="width:100px; height:100px; object-fit:contain; margin-bottom:var(--sp-xs);">
         <span>KACAMATA HITAM</span>
       </button>
       <button class="choice-card" data-answer="wrong" data-id="lc3">
-        <span class="choice-emoji">🍦</span>
+        <img src="./assets/logika_eskrim.png" alt="Es Krim" style="width:100px; height:100px; object-fit:contain; margin-bottom:var(--sp-xs);">
         <span>ES KRIM</span>
       </button>
     </div>
@@ -259,13 +291,25 @@
       <p style="font-weight:700; margin-bottom:var(--sp-sm);">💡 Berpikir Logis artinya…</p>
       <p style="font-size:1rem;">Menggunakan <span class="hl-yellow">informasi</span> dan <span class="hl-yellow">alasan</span> untuk menentukan tindakan yang paling masuk akal.</p>
       <div class="diagram-row" style="margin-top:var(--sp-sm);">
-        <div class="diagram-step">👁️ Amati</div>
+        <div class="diagram-step-card">
+          <img src="./assets/step_amati.png" alt="Amati" style="width:70px; height:70px; object-fit:contain;"> 
+          <span>Amati</span>
+        </div>
         <div class="diagram-arrow">➔</div>
-        <div class="diagram-step">🧠 Pikir</div>
+        <div class="diagram-step-card">
+          <img src="./assets/step_pikir.png" alt="Pikir" style="width:70px; height:70px; object-fit:contain;"> 
+          <span>Pikir</span>
+        </div>
         <div class="diagram-arrow">➔</div>
-        <div class="diagram-step">🎯 Pilih</div>
+        <div class="diagram-step-card">
+          <img src="./assets/step_pilih.png" alt="Pilih" style="width:70px; height:70px; object-fit:contain;"> 
+          <span>Pilih</span>
+        </div>
         <div class="diagram-arrow">➔</div>
-        <div class="diagram-step">🚀 Coba</div>
+        <div class="diagram-step-card">
+          <img src="./assets/step_coba.png" alt="Coba" style="width:70px; height:70px; object-fit:contain;"> 
+          <span>Coba</span>
+        </div>
       </div>
     </div>
 
@@ -287,15 +331,14 @@
       <button class="tab-btn" data-tab="3b">🔍 2. Pola</button>
       <button class="tab-btn" data-tab="3c">🎯 3. Pilih</button>
       <button class="tab-btn" data-tab="3d">🪜 4. Langkah</button>
-      <button class="tab-btn" data-tab="3e">🐛 5. Bug</button>
     </div>
 
-    <!-- 3A: DECOMPOSITION -->
+    <!-- 3A: PECAH MASALAH -->
     <div id="sub-3a" class="subpane active" style="border-top:4px solid var(--accent-blue); padding-top:var(--sp-md);">
       <div class="scene-header">
         <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">A</span></div>
         <div class="scene-title-col">
-          <span class="stamp stamp-blue">DECOMPOSITION</span>
+          <span class="stamp stamp-blue">PECAH MASALAH</span>
           <h2>PECAH JADI KECIL!</h2>
         </div>
       </div>
@@ -318,41 +361,67 @@
         </div>
       </div>
 
-      <div class="instruction-note">
-        📌 Klik kotak di bawah untuk memecah tugas menjadi bagian-bagian kecil!
-      </div>
-
       <div class="tree-area">
         <button class="tree-root" id="btn-tree-reveal" onclick="revealTree()">
-          🎒 PERSIAPAN SEKOLAH (Klik Aku!)
+          <img src="assets/tree_sekolah.png" alt="Tas Sekolah" class="tree-root-img"> PERSIAPAN SEKOLAH (Klik Aku!)
         </button>
         <div id="tree-connector-1" class="tree-connector hidden"></div>
         <div id="tree-level-1" class="tree-branches hidden">
+          <!-- Cabang 1: Pakaian -->
           <div class="tree-branch" id="tb1">
-            <div style="font-size:1.5rem;">👔</div>
-            <div>Pakaian</div>
+            <img src="assets/tree_pakaian.png" alt="Pakaian" class="tree-branch-img">
+            <div class="tree-branch-label">Pakaian</div>
             <div id="tb1-sub" class="tree-sub-grid hidden">
-              <div class="tree-sub-branch">Seragam</div>
-              <div class="tree-sub-branch">Sepatu</div>
-              <div class="tree-sub-branch">Kaos kaki</div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_seragam.png" alt="Seragam" class="tree-sub-img">
+                <span>Seragam</span>
+              </div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_sepatu.png" alt="Sepatu" class="tree-sub-img">
+                <span>Sepatu</span>
+              </div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_kaoskaki.png" alt="Kaos kaki" class="tree-sub-img">
+                <span>Kaos kaki</span>
+              </div>
             </div>
           </div>
+          <!-- Cabang 2: Buku & Alat -->
           <div class="tree-branch" id="tb2">
-            <div style="font-size:1.5rem;">📚</div>
-            <div>Buku & Alat</div>
+            <img src="assets/tree_buku.png" alt="Buku dan Alat" class="tree-branch-img">
+            <div class="tree-branch-label">Buku &amp; Alat</div>
             <div id="tb2-sub" class="tree-sub-grid hidden">
-              <div class="tree-sub-branch">Buku tulis</div>
-              <div class="tree-sub-branch">Pensil</div>
-              <div class="tree-sub-branch">Penghapus</div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_buku.png" alt="Buku tulis" class="tree-sub-img">
+                <span>Buku tulis</span>
+              </div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_pensil.png" alt="Pensil" class="tree-sub-img">
+                <span>Pensil</span>
+              </div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_penghapus.png" alt="Penghapus" class="tree-sub-img">
+                <span>Penghapus</span>
+              </div>
             </div>
           </div>
+          <!-- Cabang 3: Bekal -->
           <div class="tree-branch" id="tb3">
-            <div style="font-size:1.5rem;">🥪</div>
-            <div>Bekal</div>
+            <img src="assets/tree_bekal.png" alt="Bekal" class="tree-branch-img">
+            <div class="tree-branch-label">Bekal</div>
             <div id="tb3-sub" class="tree-sub-grid hidden">
-              <div class="tree-sub-branch">Makanan</div>
-              <div class="tree-sub-branch">Minuman</div>
-              <div class="tree-sub-branch">Uang saku</div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_nasibox.png" alt="Nasi kotak" class="tree-sub-img">
+                <span>Nasi kotak</span>
+              </div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_botol.png" alt="Botol minum" class="tree-sub-img">
+                <span>Botol minum</span>
+              </div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_buah.png" alt="Buah" class="tree-sub-img">
+                <span>Buah</span>
+              </div>
             </div>
           </div>
         </div>
@@ -362,7 +431,7 @@
       </div>
 
       <div class="takeaway">
-        <strong>💡 Decomposition</strong> = Memecah masalah besar menjadi bagian-bagian kecil yang lebih mudah diselesaikan satu per satu.
+        <strong>💡 Pecah Masalah</strong> = Memecah masalah besar menjadi bagian-bagian kecil yang lebih mudah diselesaikan satu per satu.
       </div>
       <div class="nav-row">
         <button class="btn btn-ghost" onclick="gotoScene(2)">← LOGIKA</button>
@@ -370,12 +439,12 @@
       </div>
     </div>
 
-    <!-- 3B: PATTERN RECOGNITION -->
+    <!-- 3B: CARI POLA -->
     <div id="sub-3b" class="subpane" style="border-top:4px solid var(--accent-yellow); padding-top:var(--sp-md);">
       <div class="scene-header">
         <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">B</span></div>
         <div class="scene-title-col">
-          <span class="stamp stamp-yellow">PATTERN RECOGNITION</span>
+          <span class="stamp stamp-yellow">CARI POLA</span>
           <h2>CARI POLA!</h2>
         </div>
       </div>
@@ -455,7 +524,7 @@
       </div>
 
       <div class="takeaway" style="margin-top:var(--sp-md);">
-        <strong>💡 Pattern Recognition</strong> = Kemampuan menemukan sesuatu yang berulang atau memiliki kesamaan. Komputer juga pakai ini untuk mengenali wajah, suara, dan tulisan!
+        <strong>💡 Cari Pola</strong> = Kemampuan menemukan sesuatu yang berulang atau memiliki kesamaan. Komputer juga pakai ini untuk mengenali wajah, suara, dan tulisan!
       </div>
       <div class="nav-row">
         <button class="btn btn-ghost" onclick="switchTab('3a')">← PECAH</button>
@@ -463,12 +532,12 @@
       </div>
     </div>
 
-    <!-- 3C: ABSTRACTION -->
+    <!-- 3C: PILIH YANG PENTING -->
     <div id="sub-3c" class="subpane" style="border-top:4px solid var(--accent-orange); padding-top:var(--sp-md);">
       <div class="scene-header">
         <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">C</span></div>
         <div class="scene-title-col">
-          <span class="stamp stamp-orange">ABSTRACTION</span>
+          <span class="stamp stamp-orange">PILIH YANG PENTING</span>
           <h2>PILIH YANG PENTING!</h2>
         </div>
       </div>
@@ -490,28 +559,34 @@
       </div>
 
       <div class="scenario-box" style="margin-bottom:var(--sp-md);">
-        <strong>Misi:</strong> Cari jalan dari 🏠 Rumah ke 🏫 Sekolah.<br>
-        <small style="color:#666;">Pilih <strong>2–3 hal yang PALING PENTING</strong> untuk kamu perhatikan:</small>
+        <strong>Misi:</strong> Cari barang untuk persiapan makan.<br>
+        <small style="color:#666;">Pilih <strong>3 hal yang PALING PENTING</strong> untuk kamu perhatikan:</small>
       </div>
 
       <div class="abs-grid" id="abs-items">
-        <button class="abs-item" data-id="home" data-important="true">
-          <span style="font-size:1.8rem;">🏠</span><span>Rumah (titik awal)</span>
+        <button class="abs-item" data-id="gelas" data-important="true">
+          <img src="./assets/opt_gelas.png" alt="Gelas" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Gelas</span>
         </button>
         <button class="abs-item" data-id="cat" data-important="false">
-          <span style="font-size:1.8rem;">🐱</span><span>Kucing Tidur</span>
+          <img src="./assets/opt_kucing.png" alt="Kucing" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Kucing</span>
         </button>
-        <button class="abs-item" data-id="school" data-important="true">
-          <span style="font-size:1.8rem;">🏫</span><span>Sekolah (tujuan)</span>
+        <button class="abs-item" data-id="piring" data-important="true">
+          <img src="./assets/opt_piring.png" alt="Piring" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Piring</span>
         </button>
         <button class="abs-item" data-id="cloud" data-important="false">
-          <span style="font-size:1.8rem;">☁️</span><span>Awan di langit</span>
+          <img src="./assets/opt_awan.png" alt="Awan" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Awan</span>
         </button>
-        <button class="abs-item" data-id="road" data-important="true">
-          <span style="font-size:1.8rem;">🛣️</span><span>Jalan Utama</span>
+        <button class="abs-item" data-id="sendokgarpu" data-important="true">
+          <img src="./assets/opt_sendokgarpu.png" alt="Sendok &amp; Garpu" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Sendok &amp; Garpu</span>
         </button>
         <button class="abs-item" data-id="bird" data-important="false">
-          <span style="font-size:1.8rem;">🐦</span><span>Burung di pohon</span>
+          <img src="./assets/opt_burung.png" alt="Burung" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Burung</span>
         </button>
       </div>
 
@@ -522,7 +597,7 @@
       <div id="abs-feedback" class="feedback-box hidden"></div>
 
       <div class="takeaway" style="margin-top:var(--sp-md);">
-        <strong>💡 Abstraction</strong> = Memilih dan fokus hanya pada informasi yang <em>penting</em>, mengabaikan yang tidak perlu. Ini membantu kita berpikir lebih efisien!
+        <strong>💡 Pilih Yang Penting</strong> = Memilih dan fokus hanya pada informasi yang <em>penting</em>, mengabaikan yang tidak perlu. Ini membantu kita berpikir lebih efisien!
       </div>
       <div class="nav-row">
         <button class="btn btn-ghost" onclick="switchTab('3b')">← POLA</button>
@@ -530,12 +605,12 @@
       </div>
     </div>
 
-    <!-- 3D: ALGORITHM -->
+    <!-- 3D: SUSUN LANGKAH -->
     <div id="sub-3d" class="subpane" style="border-top:4px solid var(--accent-green); padding-top:var(--sp-md);">
       <div class="scene-header">
         <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">D</span></div>
         <div class="scene-title-col">
-          <span class="stamp stamp-green">ALGORITHM</span>
+          <span class="stamp stamp-green">SUSUN LANGKAH</span>
           <h2>SUSUN LANGKAH!</h2>
         </div>
       </div>
@@ -557,108 +632,38 @@
       </div>
 
       <div class="instruction-note">
-        📌 Gunakan tombol ⬆ ⬇ untuk mengurutkan langkah membuat Susu Cokelat 🍫 dari awal hingga selesai!
+        📌 Contoh Algoritma: Langkah Membuat Susu Cokelat 🍫
       </div>
 
-      <div class="reorder-list" id="algo-reorder"></div>
-
-      <div style="text-align:center; margin-top:var(--sp-md);">
-        <button class="btn btn-green btn-sm" onclick="checkAlgorithm()">✓ CEK URUTAN</button>
-        <button class="btn btn-ghost btn-sm" style="margin-left:var(--sp-sm);" onclick="resetAlgorithm()">↺ ACAK LAGI</button>
+      <div class="reorder-list">
+        <div class="reorder-item is-right">
+          <div class="reorder-num">1</div>
+          <div class="reorder-emoji">🥛</div>
+          <div class="reorder-text">Siapkan gelas bersih</div>
+        </div>
+        <div class="reorder-item is-right">
+          <div class="reorder-num">2</div>
+          <div class="reorder-emoji">🍫</div>
+          <div class="reorder-text">Masukkan bubuk cokelat</div>
+        </div>
+        <div class="reorder-item is-right">
+          <div class="reorder-num">3</div>
+          <div class="reorder-emoji">💧</div>
+          <div class="reorder-text">Tuang air atau susu</div>
+        </div>
+        <div class="reorder-item is-right">
+          <div class="reorder-num">4</div>
+          <div class="reorder-emoji">🥄</div>
+          <div class="reorder-text">Aduk hingga merata</div>
+        </div>
       </div>
-
-      <div id="algo-feedback" class="feedback-box hidden"></div>
 
       <div class="takeaway" style="margin-top:var(--sp-md);">
-        <strong>💡 Algorithm</strong> = Urutan langkah logis yang disusun untuk menyelesaikan masalah. Komputer hanya bisa bekerja jika instruksinya benar dan berurutan!
+        <strong>💡 Susun Langkah</strong> = Urutan langkah logis yang disusun untuk menyelesaikan masalah. Komputer hanya bisa bekerja jika instruksinya benar dan berurutan!
       </div>
       <div class="nav-row">
         <button class="btn btn-ghost" onclick="switchTab('3c')">← PILIH</button>
-        <button class="btn btn-green" onclick="switchTab('3e')">5. CARI BUG →</button>
-      </div>
-    </div>
-
-    <!-- 3E: DEBUGGING -->
-    <div id="sub-3e" class="subpane" style="border-top:4px solid var(--accent-red); padding-top:var(--sp-md);">
-      <div class="scene-header">
-        <div class="scene-num-col"><span class="scene-number" style="font-size:3rem;">E</span></div>
-        <div class="scene-title-col">
-          <span class="stamp stamp-red">DEBUGGING</span>
-          <h2>CARI &amp; PERBAIKI BUG!</h2>
-        </div>
-      </div>
-
-      <div class="mascot-row">
-        <div class="logi-wrap">
-          <svg viewBox="0 0 80 80" width="55" height="55" aria-hidden="true">
-            <rect x="10" y="10" width="60" height="40" rx="6" fill="#FFF9EA" stroke="#202124" stroke-width="2.5"/>
-            <rect x="17" y="16" width="46" height="27" rx="4" fill="#202124"/>
-            <circle cx="32" cy="28" r="5" fill="#FFC83D"/>
-            <circle cx="48" cy="28" r="5" fill="#FFC83D"/>
-            <!-- Sad mouth -->
-            <path d="M 35 38 Q 40 33 45 38" stroke="#F15A4A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <rect x="20" y="52" width="40" height="22" rx="4" fill="#F15A4A" stroke="#202124" stroke-width="2.5"/>
-          </svg>
-        </div>
-        <div class="speech-bubble">
-          "Ada yang tidak beres! <strong>Bisakah kamu menemukan langkah yang aneh/salah?</strong> Klik langkahnya!"
-        </div>
-      </div>
-
-      <!-- Phase 1: Find the bug -->
-      <div id="debug-phase-1">
-        <div class="instruction-note">📌 Klik langkah yang SALAH / tidak logis di urutan membuat susu cokelat ini:</div>
-
-        <div class="reorder-list" id="debug-scrambled">
-          <div class="reorder-item is-bug" data-bug="true" onclick="foundBug(this)">
-            <div class="reorder-num">01</div>
-            <div class="reorder-emoji">☕</div>
-            <div class="reorder-text">Minum susu cokelatnya</div>
-            <div style="font-size:0.8rem; color:#F15A4A; margin-left:auto; font-weight:700;">Klik jika salah!</div>
-          </div>
-          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
-            <div class="reorder-num">02</div>
-            <div class="reorder-emoji">🥛</div>
-            <div class="reorder-text">Tuang susu ke gelas</div>
-          </div>
-          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
-            <div class="reorder-num">03</div>
-            <div class="reorder-emoji">🍫</div>
-            <div class="reorder-text">Masukkan bubuk cokelat</div>
-          </div>
-          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
-            <div class="reorder-num">04</div>
-            <div class="reorder-emoji">🥄</div>
-            <div class="reorder-text">Aduk hingga rata</div>
-          </div>
-          <div class="reorder-item" data-bug="false" onclick="wrongBug(this)">
-            <div class="reorder-num">05</div>
-            <div class="reorder-emoji">🫙</div>
-            <div class="reorder-text">Siapkan gelas bersih</div>
-          </div>
-        </div>
-
-        <div id="debug-p1-fb" class="feedback-box hidden"></div>
-      </div>
-
-      <!-- Phase 2: Fix the order -->
-      <div id="debug-phase-2" class="hidden">
-        <div class="instruction-note" style="border-color:var(--accent-green);">
-          🐛 Bug ditemukan! Sekarang <strong>urutkan yang benar</strong> menggunakan ⬆ ⬇:
-        </div>
-        <div class="reorder-list" id="debug-reorder"></div>
-        <div style="text-align:center; margin-top:var(--sp-md);">
-          <button class="btn btn-green btn-sm" onclick="checkDebug()">✓ CEK PERBAIKAN</button>
-        </div>
-        <div id="debug-p2-fb" class="feedback-box hidden"></div>
-      </div>
-
-      <div class="takeaway" style="margin-top:var(--sp-md);">
-        <strong>💡 Debugging</strong> = Proses menemukan kesalahan (<em>bug</em>) dalam urutan atau instruksi, lalu memperbaikinya agar berjalan dengan benar.
-      </div>
-      <div class="nav-row">
-        <button class="btn btn-ghost" onclick="switchTab('3d')">← LANGKAH</button>
-        <button class="btn btn-red" id="btn-goto-scene4" onclick="gotoScene(4)" disabled>LIHAT RINGKASAN →</button>
+        <button class="btn btn-green" onclick="gotoScene(4)">LIHAT RINGKASAN →</button>
       </div>
     </div>
 
@@ -676,27 +681,22 @@
       <div class="summary-tile">
         <span class="tile-icon">🧩</span>
         <h4>Pecah Masalah</h4>
-        <p>Decomposition</p>
+        <p>Masalah besar dipecah jadi bagian kecil</p>
       </div>
       <div class="summary-tile">
         <span class="tile-icon">🔍</span>
         <h4>Cari Pola</h4>
-        <p>Pattern Recognition</p>
+        <p>Temukan sesuatu yang berulang</p>
       </div>
       <div class="summary-tile">
         <span class="tile-icon">🎯</span>
-        <h4>Pilih Penting</h4>
-        <p>Abstraction</p>
+        <h4>Pilih Yang Penting</h4>
+        <p>Fokus pada informasi penting saja</p>
       </div>
       <div class="summary-tile">
         <span class="tile-icon">🪜</span>
         <h4>Susun Langkah</h4>
-        <p>Algorithm</p>
-      </div>
-      <div class="summary-tile">
-        <span class="tile-icon">🐛</span>
-        <h4>Perbaiki Bug</h4>
-        <p>Debugging</p>
+        <p>Buat urutan langkah yang logis</p>
       </div>
     </div>
 
@@ -743,6 +743,10 @@
       </div>
     </div>
 
+    <div style="margin-bottom:var(--sp-sm);">
+      <button class="btn btn-ghost btn-sm" onclick="backToMateri()">← Kembali ke Materi</button>
+    </div>
+
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-md);">
         <span class="stamp stamp-ink" id="m1-level-label">Level 1 dari 3</span>
@@ -772,13 +776,17 @@
       </div>
     </div>
 
+    <div style="margin-bottom:var(--sp-sm);">
+      <button class="btn btn-ghost btn-sm" onclick="gotoMission(1)">← Kembali ke Misi 1</button>
+    </div>
+
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-md);">
         <span class="stamp stamp-ink" id="m2-level-label">Level 1 dari 3</span>
         <span style="font-size:0.88rem; color:#666;" id="m2-task-name"></span>
       </div>
 
-      <div class="instruction-note">📌 Gunakan ⬆ ⬇ untuk mengatur urutan yang benar dari atas ke bawah!</div>
+      <div class="instruction-note">🖐 Seret dan lepas kartu untuk mengatur urutan yang benar dari atas ke bawah!</div>
 
       <div class="reorder-list" id="m2-reorder"></div>
 
@@ -802,6 +810,10 @@
         <div class="level-dot" id="m3-dot-2">2</div>
         <div class="level-dot" id="m3-dot-3">3</div>
       </div>
+    </div>
+
+    <div style="margin-bottom:var(--sp-sm);">
+      <button class="btn btn-ghost btn-sm" onclick="gotoMission(2)">← Kembali ke Misi 2</button>
     </div>
 
     <div class="mission3-layout">
@@ -831,19 +843,8 @@
             <div></div>
           </div>
 
-          <div style="margin-top:var(--sp-md);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-xs);">
-              <span style="font-family:var(--font-display); font-size:0.9rem;">PERINTAH (<span id="cmd-count">0</span>/10):</span>
-              <button class="btn btn-ghost btn-sm" onclick="removeLastCmd()">⌫ Hapus</button>
-            </div>
-            <div class="cmd-queue-box" id="cmd-queue">
-              <span class="cmd-placeholder">Belum ada perintah...</span>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:var(--sp-sm); margin-top:var(--sp-md);">
-            <button class="btn btn-yellow" onclick="runRobot()" style="flex:1;">🚀 JALANKAN!</button>
-            <button class="btn btn-ghost btn-sm" onclick="resetMaze()">↺</button>
+          <div style="display:flex; justify-content:center; margin-top:var(--sp-md);">
+            <button class="btn btn-ghost" onclick="resetMaze()">↺ RESET POSISI</button>
           </div>
         </div>
       </div>
@@ -930,34 +931,8 @@
     </div>
   </div>
 
-  <!-- Certificate -->
-  <div class="certificate card" id="sertifikat">
-    <div style="margin-bottom:var(--sp-md);">
-      <span class="stamp stamp-green">SERTIFIKAT DIGITAL</span>
-    </div>
-    <h2 class="certificate-title">PROGRAMMER CILIK ADVENTURE</h2>
-    <p style="font-size:0.9rem; color:#666; margin-bottom:var(--sp-sm);">Dengan bangga diberikan kepada kelompok:</p>
-    <div class="certificate-name" id="cert-name">Nama Kelompok</div>
-    <p style="font-size:0.9rem; margin:var(--sp-sm) 0;">Telah berhasil menyelesaikan semua misi dan mempelajari:</p>
-    <ul class="cert-checklist">
-      <li><span class="cert-check">✓</span> Berpikir Logis</li>
-      <li><span class="cert-check">✓</span> Pattern Recognition — Menemukan Pola</li>
-      <li><span class="cert-check">✓</span> Decomposition — Memecah Masalah</li>
-      <li><span class="cert-check">✓</span> Abstraction — Memilih Informasi Penting</li>
-      <li><span class="cert-check">✓</span> Algorithm — Menyusun Langkah</li>
-      <li><span class="cert-check">✓</span> Debugging — Menemukan &amp; Memperbaiki Bug</li>
-    </ul>
-    <div class="cert-date" id="cert-date"></div>
-  </div>
-
-  <!-- Name input + actions -->
-  <div class="name-input-row no-print">
-    <input type="text" class="name-input" id="name-input" placeholder="Tulis nama kelompokmu..." maxlength="40">
-    <button class="btn btn-yellow" onclick="setName()">✓ SET NAMA</button>
-  </div>
-
-  <div style="display:flex; gap:var(--sp-sm); justify-content:center; flex-wrap:wrap; margin-bottom:var(--sp-xl);" class="no-print">
-    <button class="btn btn-ink" onclick="window.print()">🖨️ CETAK SERTIFIKAT</button>
+  <!-- Actions -->
+  <div style="display:flex; gap:var(--sp-sm); justify-content:center; flex-wrap:wrap; margin-bottom:var(--sp-xl);">
     <button class="btn btn-blue" onclick="showScreen('materi')">📖 KEMBALI KE MATERI</button>
     <button class="btn btn-ghost" onclick="restartAll()">🔄 MAIN LAGI</button>
   </div>
