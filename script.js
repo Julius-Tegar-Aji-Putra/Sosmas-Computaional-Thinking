@@ -404,8 +404,8 @@ function checkAbstraction() {
   const important = ['home','school','road'];
   const selected  = state.absSelected;
 
-  if (selected.length < 2) {
-    showToast('Pilih setidaknya 2 hal penting dulu!', 'wrong');
+  if (selected.length < 3) {
+    showToast('Pilih 3 hal penting dulu!', 'wrong');
     return;
   }
 
@@ -413,7 +413,7 @@ function checkAbstraction() {
   const wrongCount   = selected.filter(id => !important.includes(id)).length;
   const fbEl = document.getElementById('abs-feedback');
 
-  if (wrongCount === 0 && correctCount >= 2) {
+  if (wrongCount === 0 && correctCount === 3) {
     // All selected are correct
     document.querySelectorAll('#abs-items .abs-item').forEach(b => {
       if (important.includes(b.dataset.id)) {

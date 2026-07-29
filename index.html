@@ -361,41 +361,67 @@
         </div>
       </div>
 
-      <div class="instruction-note">
-        📌 Klik kotak di bawah untuk memecah tugas menjadi bagian-bagian kecil!
-      </div>
-
       <div class="tree-area">
         <button class="tree-root" id="btn-tree-reveal" onclick="revealTree()">
-          🎒 PERSIAPAN SEKOLAH (Klik Aku!)
+          <img src="assets/tree_sekolah.png" alt="Tas Sekolah" class="tree-root-img"> PERSIAPAN SEKOLAH (Klik Aku!)
         </button>
         <div id="tree-connector-1" class="tree-connector hidden"></div>
         <div id="tree-level-1" class="tree-branches hidden">
+          <!-- Cabang 1: Pakaian -->
           <div class="tree-branch" id="tb1">
-            <div style="font-size:1.5rem;">👔</div>
-            <div>Pakaian</div>
+            <img src="assets/tree_pakaian.png" alt="Pakaian" class="tree-branch-img">
+            <div class="tree-branch-label">Pakaian</div>
             <div id="tb1-sub" class="tree-sub-grid hidden">
-              <div class="tree-sub-branch">Seragam</div>
-              <div class="tree-sub-branch">Sepatu</div>
-              <div class="tree-sub-branch">Kaos kaki</div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_seragam.png" alt="Seragam" class="tree-sub-img">
+                <span>Seragam</span>
+              </div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_sepatu.png" alt="Sepatu" class="tree-sub-img">
+                <span>Sepatu</span>
+              </div>
+              <div class="tree-sub-branch">
+                <img src="assets/sub_kaoskaki.png" alt="Kaos kaki" class="tree-sub-img">
+                <span>Kaos kaki</span>
+              </div>
             </div>
           </div>
+          <!-- Cabang 2: Buku & Alat -->
           <div class="tree-branch" id="tb2">
-            <div style="font-size:1.5rem;">📚</div>
-            <div>Buku & Alat</div>
+            <img src="assets/tree_buku.png" alt="Buku dan Alat" class="tree-branch-img">
+            <div class="tree-branch-label">Buku &amp; Alat</div>
             <div id="tb2-sub" class="tree-sub-grid hidden">
-              <div class="tree-sub-branch">Buku tulis</div>
-              <div class="tree-sub-branch">Pensil</div>
-              <div class="tree-sub-branch">Penghapus</div>
+              <div class="tree-sub-branch">
+                <div style="font-size: 24px; height: 40px; display: flex; align-items: center; justify-content: center;">📓</div>
+                <span>Buku tulis</span>
+              </div>
+              <div class="tree-sub-branch">
+                <div style="font-size: 24px; height: 40px; display: flex; align-items: center; justify-content: center;">✏️</div>
+                <span>Pensil</span>
+              </div>
+              <div class="tree-sub-branch">
+                <div style="font-size: 24px; height: 40px; display: flex; align-items: center; justify-content: center;">🧽</div>
+                <span>Penghapus</span>
+              </div>
             </div>
           </div>
+          <!-- Cabang 3: Bekal -->
           <div class="tree-branch" id="tb3">
-            <div style="font-size:1.5rem;">🥪</div>
-            <div>Bekal</div>
+            <img src="assets/tree_bekal.png" alt="Bekal" class="tree-branch-img">
+            <div class="tree-branch-label">Bekal</div>
             <div id="tb3-sub" class="tree-sub-grid hidden">
-              <div class="tree-sub-branch">Makanan</div>
-              <div class="tree-sub-branch">Minuman</div>
-              <div class="tree-sub-branch">Uang saku</div>
+              <div class="tree-sub-branch">
+                <div style="font-size: 24px; height: 40px; display: flex; align-items: center; justify-content: center;">🍱</div>
+                <span>Nasi kotak</span>
+              </div>
+              <div class="tree-sub-branch">
+                <div style="font-size: 24px; height: 40px; display: flex; align-items: center; justify-content: center;">🍼</div>
+                <span>Botol minum</span>
+              </div>
+              <div class="tree-sub-branch">
+                <div style="font-size: 24px; height: 40px; display: flex; align-items: center; justify-content: center;">🍎</div>
+                <span>Buah</span>
+              </div>
             </div>
           </div>
         </div>
@@ -534,27 +560,33 @@
 
       <div class="scenario-box" style="margin-bottom:var(--sp-md);">
         <strong>Misi:</strong> Cari jalan dari 🏠 Rumah ke 🏫 Sekolah.<br>
-        <small style="color:#666;">Pilih <strong>2–3 hal yang PALING PENTING</strong> untuk kamu perhatikan:</small>
+        <small style="color:#666;">Pilih <strong>3 hal yang PALING PENTING</strong> untuk kamu perhatikan:</small>
       </div>
 
       <div class="abs-grid" id="abs-items">
         <button class="abs-item" data-id="home" data-important="true">
-          <span style="font-size:1.8rem;">🏠</span><span>Rumah (titik awal)</span>
+          <img src="./assets/opt_rumah.png" alt="Rumah" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Rumah (titik awal)</span>
         </button>
         <button class="abs-item" data-id="cat" data-important="false">
-          <span style="font-size:1.8rem;">🐱</span><span>Kucing Tidur</span>
+          <img src="./assets/opt_kucing.png" alt="Kucing" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Kucing Tidur</span>
         </button>
         <button class="abs-item" data-id="school" data-important="true">
-          <span style="font-size:1.8rem;">🏫</span><span>Sekolah (tujuan)</span>
+          <img src="./assets/opt_sekolah.png" alt="Sekolah" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Sekolah (tujuan)</span>
         </button>
         <button class="abs-item" data-id="cloud" data-important="false">
-          <span style="font-size:1.8rem;">☁️</span><span>Awan di langit</span>
+          <img src="./assets/opt_awan.png" alt="Awan" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Awan di langit</span>
         </button>
         <button class="abs-item" data-id="road" data-important="true">
-          <span style="font-size:1.8rem;">🛣️</span><span>Jalan Utama</span>
+          <img src="./assets/opt_jalan.png" alt="Jalan" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Jalan Utama</span>
         </button>
         <button class="abs-item" data-id="bird" data-important="false">
-          <span style="font-size:1.8rem;">🐦</span><span>Burung di pohon</span>
+          <img src="./assets/opt_burung.png" alt="Burung" style="width:80px; height:80px; object-fit:contain; margin-bottom:var(--sp-xs);">
+          <span>Burung di pohon</span>
         </button>
       </div>
 
